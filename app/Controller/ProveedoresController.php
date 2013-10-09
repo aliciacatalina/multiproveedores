@@ -12,4 +12,5 @@ class ProveedoresController extends AppController {
 				'_serialize' => array('proveedores')
 			));
 	}
+}
 	
