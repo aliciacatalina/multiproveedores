@@ -6,7 +6,7 @@ class ProveedoresController extends AppController {
 
 	//accion para desplegar el listado de proveedores
 	public function index() {
-		$proveedores = $this->Proveedor->find('all');
+		$proveedores = $this->Proveedore->find('all');
 		$this->set(array(
 				'proveedores' => $proveedores,
 				'_serialize' => array('proveedores')
