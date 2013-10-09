@@ -17,17 +17,17 @@
     <tr>
         <td><?php echo $usuario['Usuario']['idusuario']; ?></td>
         <td>
-            <?php echo $this->Html->link($usuario['Usuario']['nombre'], array('action' => 'view', $usuario['Usuario']['id'])); ?>
+            <?php echo $this->Html->link($usuario['Usuario']['nombre'], array('action' => 'view', $usuario['Usuario']['idusuario'])); ?>
         </td>
         <td><?php echo $usuario['Usuario']['nombreusuario']; ?></td>
         <td><?php echo $usuario['Usuario']['password']; ?></td>
         <td><?php echo $usuario['Usuario']['correo']; ?></td>
         <td><?php echo $usuario['Usuario']['fechacreacion']; ?></td>
         <td>
-            <?php echo $this->Html->link('Edit', array('action' => 'edit', $usuario['Usuario']['id'])); ?>
+            <?php echo $this->Html->link('Edit', array('action' => 'edit', $usuario['Usuario']['idusuario'])); ?>
         </td>
         <td>
-            <?php echo $this->Html->link('Delete', array('action' => 'delete', $usuario['Usuario']['id'])); ?>
+            <?php echo $this->Html->link('Delete', array('action' => 'delete', $usuario['Usuario']['idusuario'])); ?>
         </td>        
     </tr>
 <?php endforeach; ?>
