@@ -7,7 +7,7 @@
  * @package       app.View.Pages
  * @since         CakePHP(tm) v 0.10.0.1076
  */
-
+Alicia Rulz
 if (!Configure::read('debug')):
 	throw new NotFoundException();
 endif;
