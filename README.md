@@ -1,6 +1,6 @@
 Z!s†3må multiproveedores
 =======
-CakePHP
+CakePHP2
 =======
 
 [![CakePHP](http://cakephp.org/img/cake-logo.png)](http://www.cakephp.org)
