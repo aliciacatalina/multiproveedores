@@ -30,6 +30,7 @@ public function login() {
 }
 
 public function logout() {
+	$this->Session->setFlash(__('Logged out'));
     return $this->redirect($this->Auth->logout());
 }
 
@@ -111,11 +112,13 @@ public function logout() {
 		if (!$this->User->exists()) {
 			throw new NotFoundException(__('Invalid user'));
 		}
-		$this->request->onlyAllow('post', 'delete');
 		if ($this->User->delete()) {
 			$this->Session->setFlash(__('The user has been deleted.'));
 		} else {
 			$this->Session->setFlash(__('The user could not be deleted. Please, try again.'));
 		}
 		return $this->redirect(array('action' => 'index'));
-	}}
+	}
+
+
+}

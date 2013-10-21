@@ -22,7 +22,8 @@ class RequestsController extends AppController {
  */
 	public function index() {
 		$this->Request->recursive = 0;
-		$this->set('requests', $this->Paginator->paginate());
+		$requests = $this->Paginator->paginate(array('user_id' => null));
+		$this->set('requests', $requests);
 	}
 
 /**
@@ -30,15 +31,38 @@ class RequestsController extends AppController {
  *@param string $id
  *@return void
  */
-	public function pending()
+	//pal admin?
+	public function all()
 	{
 		$this->Request->recursive = 0;
-		$pendingRequests = $this->Paginator->paginate(array('user_id' => null));
-		$this->set('pendingRequests', $pendingRequests);
+		$this->set('requests', $this->Paginator->paginate());
+	}
 
-
-		//$pendingRequests = $this->Request->find('all', array('conditions' => array('Request.user_id' => null)));
-		//$this->set('pendingRequests', $pendingRequests);
+/**
+ *
+ *@param string $id
+ *@return void
+ *
+ */
+	public function myRequests()
+	{
+		$userId = $this->Auth->user('id');
+		$this->Request->recursive = 0;
+		$requests = $this->Paginator->paginate(array('user_id' => $userId));
+		$this->set('requests', $requests);
+	}
+/*
+ * assign method
+ *
+ * @throws NotFoundException
+ * @param request $request
+ * @return void
+ */
+	private function assign($request)
+	{
+		$request['Request']['user_id'] = $this->Auth->user('id');
+		print_r($request);
+		$this->Request->save($request['Request']);
 	}
 
 /**
@@ -66,20 +90,6 @@ class RequestsController extends AppController {
 
 		$options = array('conditions' => array('Request.' . $this->Request->primaryKey => $id));
 		$this->set('request', $this->Request->find('first', $options));
-	}
-
-	/**
- * assign method
- *
- * @throws NotFoundException
- * @param request $request
- * @return void
- */
-	private function assign($request)
-	{
-		$request['Request']['user_id'] = $this->Auth->user('id');
-		print_r($request);
-		$this->Request->save($request['Request']);
 	}
 
 /**

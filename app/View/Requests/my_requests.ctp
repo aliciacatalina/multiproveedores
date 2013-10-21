@@ -1,5 +1,5 @@
 <div class="requests index">
-	<h2><?php echo __('Requests'); ?></h2>
+	<h2><?php echo __('My requests'); ?></h2>
 	<?php echo $this->element('requests') ?> 
 	<p>
 	<?php
