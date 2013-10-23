@@ -5,11 +5,12 @@ $user="sjdggbutasilxo";
 $password = "YjfawRA_ONBo2c7zyiinveV6jy";
 $database="dbqlogo2l6v4fe";
 $conId="";
+
 try {
-$conn = new PDO('pgsql:host='.$host.';dbname='.$database, $user, $password);
+	$conn = new PDO('pgsql:host='.$host.';dbname='.$database, $user, $password);
 }
 catch(PDOException $e) {
-  echo $e->getMessage();
+	echo $e->getMessage();
 }
 
 $xmlDoc = new DOMDocument('1.0');
@@ -28,7 +29,7 @@ $product = $root->appendChild($product);
 
 //Elemento comentario
 $comments = $xmlDoc->createElement('Comments');
-$comments = $root->appendChild($comments);
+$comments = $root->appendChild($comments);	
 
 //Iterar y agregar los campos
 foreach ($_POST as $campos => $value) {
@@ -37,31 +38,31 @@ foreach ($_POST as $campos => $value) {
 	switch($tipo){
 		//Campo de cliente
 		case "cl":
-			$campo = $xmlDoc->createElement($campo);
-			$campo = $customer->appendChild($campo);
-			$valor = $xmlDoc->createTextNode($value);
-			$valor = $campo->appendChild($valor);
-			break;
+		$campo = $xmlDoc->createElement($campo);
+		$campo = $customer->appendChild($campo);
+		$valor = $xmlDoc->createTextNode($value);
+		$valor = $campo->appendChild($valor);
+		break;
 		//Campo de producto
 		case "pd":
-			$campo = $xmlDoc->createElement($campo);
-			$campo = $product->appendChild($campo);
-			$valor = $xmlDoc->createTextNode($value);
-			$valor = $campo->appendChild($valor);
-			break;
+		$campo = $xmlDoc->createElement($campo);
+		$campo = $product->appendChild($campo);
+		$valor = $xmlDoc->createTextNode($value);
+		$valor = $campo->appendChild($valor);
+		break;
 		//Campo de comentario
 		case "cm":
-			$campo = $xmlDoc->createElement($campo);
-			$campo = $comments->appendChild($campo);
-			$valor = $xmlDoc->createTextNode($value);
-			$valor = $campo->appendChild($valor);
-			$comment = $value;
-			break;
+		$campo = $xmlDoc->createElement($campo);
+		$campo = $comments->appendChild($campo);
+		$valor = $xmlDoc->createTextNode($value);
+		$valor = $campo->appendChild($valor);
+		$comment = $value;
+		break;
 	}
 }
 //$xmlDoc->save('data.xml');
 //$xml = $xmlDoc->saveXML();
-  $xml =  $xmlDoc->saveXML();
+$xml =  $xmlDoc->saveXML();
 $stmt = $conn->prepare("INSERT INTO contents (xml,comment) VALUES (:xml,:comment)");
 $stmt->execute(array(':xml'=>$xml,':comment'=>$comment));
 ?>

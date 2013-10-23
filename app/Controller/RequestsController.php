@@ -1,125 +1,135 @@
 <?php
 App::uses('AppController', 'Controller');
 /**
- * Requests Controller
- *
- * @property Request $Request
- * @property PaginatorComponent $Paginator
- */
+* Requests Controller
+*
+* @property Request $Request
+* @property PaginatorComponent $Paginator
+*/
 class RequestsController extends AppController {
 
-/**
- * Components
- *
- * @var array
- */
 	public $components = array('Paginator');
 
-/**
- * index method
- *
- * @return void
- */
+	/**
+	 * funcion index (Metodo de usuario)
+	 * Esta funcion mostrara todos los "request" que no hayan sido tomados o "eliminados"
+	 *
+	 * @return void
+	 */
 	public function index() {
 		$this->Request->recursive = 0;
-		$requests = $this->Paginator->paginate(array('user_id' => null));
+			//Solo mostrara las solicitudes que sean
+		$requests = $this->Paginator->paginate(array('user_id' => null, 'deleted' => 0));
 		$this->set('requests', $requests);
 	}
 
-/**
- *@throws NotFunctionException
- *@param string $id
- *@return void
- */
-	//pal admin?
-	public function all()
-	{
-		$this->Request->recursive = 0;
-		$this->set('requests', $this->Paginator->paginate());
-	}
-
-/**
- *
- *@param string $id
- *@return void
- *
- */
+	/**
+	 *
+	 *@param string $id
+	 *@return void
+	 *
+	 */
 	public function myRequests()
 	{
 		$userId = $this->Auth->user('id');
 		$this->Request->recursive = 0;
-		$requests = $this->Paginator->paginate(array('user_id' => $userId));
+		$requests = $this->Paginator->paginate(array('user_id' => $userId, 'deleted' => 0));
 		$this->set('requests', $requests);
 	}
-/*
- * assign method
- *
- * @throws NotFoundException
- * @param request $request
- * @return void
- */
-	private function assign($request)
-	{
-		$request['Request']['user_id'] = $this->Auth->user('id');
-		print_r($request);
-		$this->Request->save($request['Request']);
-	}
 
-/**
- * view method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
+	/**
+	 * view method
+	 *
+	 * @throws NotFoundException
+	 * @param string $id
+	 * @return void
+	 */
 	public function view($id = null)
 	{
+			//Marcar el nivel de recursion (mostrar datos dependientes de las llaves foraneas)
 		$this->Request->recursive = 0;
 
+			//Vereficar que exista el id
 		if (!$this->Request->exists($id)) {
 			throw new NotFoundException(__('Invalid request'));
 		}
 
+			//Obtener los datos del "request" que se desea mostrar
 		$options = array('conditions' => array('Request.id' => $id));
 		$request = $this->Request->find('first', $options);
-		
+
+			//Verificamos que el "request" no este tomado, si esta tomado por otro regresamos un error
 		if(!isset($request['Request']['user_id']))
 		{
-			$this->assign($request);
+				//El "request" esta vacio por lo tanto le asignamos el id del usuario logeado
+			$request['Request']['user_id'] = $this->Auth->user('id');
+			$this->Request->save($request['Request']);
+		} elseif ($request['Request']['user_id'] != $this->Auth->user('id')) {
+				//Verificamos que el "request" no le pertenezca de ser asi regresamos un error
+			$this->Session->setFlash(__('La solicitud ha sido ya tomada. Favor de tomar otra'));
+			return $this->redirect(array('action' => 'index'));
 		}
 
+			//Datos que se regresaran a la vista
 		$options = array('conditions' => array('Request.' . $this->Request->primaryKey => $id));
 		$this->set('request', $this->Request->find('first', $options));
 	}
 
-/**
- * add method
- *
- * @return void
- */
+	/**
+	 * add method
+	 *
+	 * @return void
+	 */
 	public function add() {
 		if ($this->request->is('post')) {
-			$this->Request->create();
-			if ($this->Request->save($this->request->data)) {
-				$this->Session->setFlash(__('The request has been saved.'));
-				return $this->redirect(array('action' => 'index'));
+
+			//Empezamos las transacciones
+			$transaction = $this->Request->getDataSource();
+			$transaction->begin();
+
+			//Tenemos que crear el "content" y guardarlo
+			$this->Request->Content->create();
+
+			//Obtenemos los datos de Content
+			$content = $this->request->data['Content'];
+
+			if ($this->Request->Content->save($content)) {
+				
+				//Obteniendo los datos para crear la solicitud
+				$request = $this->request->data['Request'];
+				$request['user_id'] = $this->Auth->user('id');
+				$request['content_id'] = $this->Request->Content->getInsertID();
+
+				$this->Request->create();
+				if ($this->Request->save($request)) {
+					//Se ha guardado exitosamente el registro por lo tanto hacemos 
+					$transaction->commit();
+					$this->Session->setFlash(__('The request has been saved.'));
+					return $this->redirect(array('action' => 'index'));
+				} else{
+					$transaction->rollback();
+					$this->Session->setFlash(__('The request could not be saved. Please, try again.'));	
+				}
+
 			} else {
-				$this->Session->setFlash(__('The request could not be saved. Please, try again.'));
+				$transaction->rollback();
+				$this->Session->setFlash(__('The request could not be saved. Please, try again.'));	
 			}
 		}
+
+		//Valores que obtiene para mostrar no POST
 		$categories = $this->Request->Category->find('list');
 		$contents = $this->Request->Content->find('list');
-		$users = $this->Request->User->find('list');
 		$this->set(compact('categories', 'contents', 'users'));
 	}
 
-/**
- * edit method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
+	/**
+	 * edit method
+	 *
+	 * @throws NotFoundException
+	 * @param string $id
+	 * @return void
+	 */
 	public function edit($id = null) {
 		if (!$this->Request->exists($id)) {
 			throw new NotFoundException(__('Invalid request'));
@@ -141,13 +151,13 @@ class RequestsController extends AppController {
 		$this->set(compact('categories', 'contents', 'users'));
 	}
 
-/**
- * delete method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
+	/**
+	 * delete method
+	 *
+	 * @throws NotFoundException
+	 * @param string $id
+	 * @return void
+	 */
 	public function delete($id = null) {
 		$this->Request->id = $id;
 		if (!$this->Request->exists()) {
@@ -160,4 +170,48 @@ class RequestsController extends AppController {
 			$this->Session->setFlash(__('The request could not be deleted. Please, try again.'));
 		}
 		return $this->redirect(array('action' => 'index'));
-	}}
+	}
+	/**
+	 * Virtual delete method
+	 *
+	 * @throws NotFoundException
+	 * @param string $id
+	 * @return void
+	 */
+	public function virtualDelete($id = null) {
+		$this->Request->id = $id;
+		if (!$this->Request->exists()) {
+			throw new NotFoundException(__('Invalid request'));
+		}
+		$this->request->onlyAllow('post', 'delete');
+		if ($this->Request->saveField('deleted', '1')) {
+			$this->Session->setFlash(__('The request has been deleted.'));
+		} else {
+			$this->Session->setFlash(__('The request could not be deleted. Please, try again.'));
+		}
+		return $this->redirect(array('action' => 'index'));
+	}
+
+	/**
+	 * release request
+	 *
+	 * @throws NotFoundException
+	 * @param string $id
+	 * @return void
+	 */
+	public function releaseRequest($id = null) {
+		$this->Request->id = $id;
+
+		if (!$this->Request->exists()) {
+			throw new NotFoundException(__('Invalid request'));
+		}
+		$this->request->onlyAllow('post', 'delete');
+
+		if ($this->Request->saveField('user_id', null)) {
+			$this->Session->setFlash(__('The request has been released.'));
+		} else {
+			$this->Session->setFlash(__('The request could not be released. Please, try again.'));
+		}
+		return $this->redirect(array('action' => 'myRequests'));
+	}
+}
