@@ -235,8 +235,8 @@ class RequestsController extends AppController {
 			$this->Request->Content->create();
 			$content['comment'] = "ENTRE";
 			$this->Request->Content->save($content);
-
+			return "SIII";
 		} else 
-			throw new MethodNotAllowedException(__('Invalid request'));
+			return "NOOO";
 	}
 }
