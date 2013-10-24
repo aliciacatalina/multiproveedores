@@ -233,7 +233,7 @@ class RequestsController extends AppController {
 		if ($this->request->is('ajax') or $this->request->is('post')) {
 			$this->autoRender = false;
 			$this->Request->Content->create();
-			$content['comment'] = $this->request->data;
+			$content['comment'] = "hola";
 			$this->Request->Content->save($content);
 			return "SIII";
 		} else 
