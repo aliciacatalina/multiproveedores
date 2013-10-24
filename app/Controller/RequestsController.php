@@ -233,7 +233,7 @@ class RequestsController extends AppController {
 		if ($this->request->is('post')) {
 			$this->Request->Content->create();
 
-			$content['comment'] = $this->request->data;
+			$content['comment'] = "ENTRE";
 
 			$this->Request->Content->save($content);
 
