@@ -52,10 +52,10 @@ foreach ($_POST as $campos => $value) {
 		break;
 		//Campo de comentario
 		case "cm":
-		$campo = $xmlDoc->createElement($campo);
-		$campo = $comments->appendChild($campo);
-		$valor = $xmlDoc->createTextNode($value);
-		$valor = $campo->appendChild($valor);
+		// $campo = $xmlDoc->createElement($campo);
+		// $campo = $comments->appendChild($campo);
+		// $valor = $xmlDoc->createTextNode($value);
+		// $valor = $campo->appendChild($valor);
 		$comment = $value;
 		break;
 	}

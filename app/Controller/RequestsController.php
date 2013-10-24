@@ -10,6 +10,12 @@ class RequestsController extends AppController {
 
 	public $components = array('Paginator');
 
+
+	public function beforeFilter() {
+		parent::beforeFilter();
+        $this->Auth->allow('newOnlineRequest');
+    }
+
 	/**
 	 * funcion index (Metodo de usuario)
 	 * Esta funcion mostrara todos los "request" que no hayan sido tomados o "eliminados"
@@ -213,5 +219,25 @@ class RequestsController extends AppController {
 			$this->Session->setFlash(__('The request could not be released. Please, try again.'));
 		}
 		return $this->redirect(array('action' => 'myRequests'));
+	}
+
+	/**
+	 * release request
+	 *
+	 * @throws NotFoundException
+	 * @param string $id
+	 * @return void
+	 */
+	public function newOnlineRequest() {
+
+		if ($this->request->is('post')) {
+			$this->Request->Content->create();
+
+			$content['comment'] = $this->request->data;
+
+			$this->Request->Content->save($content);
+
+		} else 
+			throw new MethodNotAllowedException(__('Invalid request'));
 	}
 }
