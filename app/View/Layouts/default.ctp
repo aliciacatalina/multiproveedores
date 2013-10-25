@@ -40,7 +40,6 @@ $cakeDescription = __d('cake_dev', 'Multiproveedores');
 </head>
 <body>
 	<?php if ($this->Session->read('Auth.User')){ 
-		// <div id="header">
  			$this->BootstrapNavbar->create(array('fixed' => 'top', 'responsive' => 'false')) ;
 			$this->BootstrapNavbar->brand('Multiproveedores') ;
 			$this->BootstrapNavbar->link('Solicitudes', array('controller' => 'blog', 'action' => 'index')) ;
@@ -52,6 +51,7 @@ $cakeDescription = __d('cake_dev', 'Multiproveedores');
 			echo $this->BootstrapNavbar->compile () ;
 		// </div>
 	} ?>
+
 		<div id="content">
 
 			<?php echo $this->Session->flash(); ?>
