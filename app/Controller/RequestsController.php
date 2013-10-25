@@ -8,13 +8,7 @@ App::uses('AppController', 'Controller');
 */
 class RequestsController extends AppController {
 
-	public $components = array('Paginator', 'RequestHandler');
-
-
-	public function beforeFilter() {
-		parent::beforeFilter();
-        $this->Auth->allow('newOnlineRequest');
-    }
+	public $components = array('Paginator');
 
 	/**
 	 * funcion index (Metodo de usuario)
@@ -219,24 +213,5 @@ class RequestsController extends AppController {
 			$this->Session->setFlash(__('The request could not be released. Please, try again.'));
 		}
 		return $this->redirect(array('action' => 'myRequests'));
-	}
-
-	/**
-	 * release request
-	 *
-	 * @throws NotFoundException
-	 * @param string $id
-	 * @return void
-	 */
-	public function newOnlineRequest() {
-
-		if($this->RequestHandler->isPost()) {
-			$this->autoRender = false;
-			$this->Request->Content->create();
-			$content['comment'] = "hola";
-			$this->Request->Content->save($content);
-			$this->response->statusCode(200);
-		} else 
-			return new CakeResponse(array'(status'=>500));
 	}
 }
