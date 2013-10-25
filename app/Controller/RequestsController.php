@@ -235,7 +235,7 @@ class RequestsController extends AppController {
 			$this->Request->Content->create();
 			$content['comment'] = "hola";
 			$this->Request->Content->save($content);
-			return new CakeResponse(array('status'=>200));
+			$this->set('content', $content);
 		} else 
 			return new CakeResponse(array('status'=>500));
 	}
