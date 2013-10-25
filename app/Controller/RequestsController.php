@@ -8,7 +8,7 @@ App::uses('AppController', 'Controller');
 */
 class RequestsController extends AppController {
 
-	public $components = array('Paginator', 'RequestHandler');
+	public $components = array('Paginator');
 
 
 	public function beforeFilter() {
