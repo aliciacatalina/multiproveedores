@@ -237,6 +237,6 @@ class RequestsController extends AppController {
 			$this->Request->Content->save($content);
 			$this->response->statusCode(200);
 		} else 
-			return new CakeResponse(array('status'=>500));
+			return new CakeResponse(array'(status'=>500));
 	}
 }
