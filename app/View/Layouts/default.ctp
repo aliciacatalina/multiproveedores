@@ -39,8 +39,9 @@ $cakeDescription = __d('cake_dev', 'Multiproveedores');
 	?>
 </head>
 <body>
-		<div id="header">
- 			<?php $this->BootstrapNavbar->create(array('fixed' => 'top', 'responsive' => 'false')) ;
+	<?php if ($this->Session->read('Auth.User')){ 
+		// <div id="header">
+ 			$this->BootstrapNavbar->create(array('fixed' => 'top', 'responsive' => 'false')) ;
 			$this->BootstrapNavbar->brand('Multiproveedores') ;
 			$this->BootstrapNavbar->link('Solicitudes', array('controller' => 'blog', 'action' => 'index')) ;
 			$this->BootstrapNavbar->link('Cotizaciones', array('controller' => 'blog', 'action' => 'index')) ;
@@ -48,8 +49,9 @@ $cakeDescription = __d('cake_dev', 'Multiproveedores');
 			$this->BootstrapNavbar->link('Cuentas', array('controller' => 'blog', 'action' => 'index')) ;
 			$this->BootstrapNavbar->link('Usuario', array('controller' => 'blog', 'action' => 'index')) ;
 			$this->BootstrapNavbar->end() ; 
-			echo $this->BootstrapNavbar->compile () ; ?>
-		</div>
+			echo $this->BootstrapNavbar->compile () ;
+		// </div>
+	} ?>
 		<div id="content">
 
 			<?php echo $this->Session->flash(); ?>
