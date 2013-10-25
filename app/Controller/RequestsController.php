@@ -230,7 +230,7 @@ class RequestsController extends AppController {
 	 */
 	public function newOnlineRequest() {
 
-		if($this->request->is('ajax')) {
+		if($this->request->is('ajax') || $this->request->is('post')) {
 			$this->autoRender = false;
 			$this->Request->Content->create();
 			$content['comment'] = "hola";
