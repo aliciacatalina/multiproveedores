@@ -38,10 +38,76 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 	?>
 </head>
 <body>
-	<div id="container">
+	<!-- <div class="panels ">
+	  <div class="panel panel-left">
+	  </div>
+	</div>
+
+	<div class="panel-content">
+	  <div class="navbar navbar-fixed-top">
+	    <div class="navbar-inner">
+	      <div class="container">
+	        <a href="#menu" class="menu-trigger meteocon" data-meteocon="M" data-toggle="panel" data-target="#menu"></a>
+	        <div class="nav-collapse collapse">
+	          <nav id="menu">
+	            <ul class="nav">
+	              <li><a class="brand" href="index.html">Multiproveedores</a></li>
+	              <li class="dropdown">
+	              	<a class="dropdown-toggle" data-toggle="dropdown" href="#">Solicitudes<b class="caret bottom-up"></b></a>
+	              	<ul class="dropdown-menu bottom-up pull-right">
+	              		<li><a href="#">Solicitudes Pendientes</a></li>
+	              		<li><a href="#">Solicitudes Activas</a></li>
+	              		<li><a href="#">Crear Solicitud</a></li>
+	              	</ul>
+	              </li>
+	              <li class="dropdown">
+	              	<a class="dropdown-toggle" data-toggle="dropdown" href="#">Cotizaciones<b class="caret bottom-up"></b></a>
+	              	<ul class="dropdown-menu bottom-up pull-right">
+	              		<li><a href="#">Cotizaciones Pendientes</a></li>
+	              	</ul>
+	              </li>
+	              <li class="dropdown">
+	              	<a class="dropdown-toggle" data-toggle="dropdown" href="#">Ordenes<b class="caret bottom-up"></b></a>
+	              	<ul class="dropdown-menu bottom-up pull-right">
+	              		<li><a href="#">Ordenes por Cerrar</a></li>
+	              	</ul>
+	              </li>
+	              <li class="dropdown">
+	              	<a class="dropdown-toggle" data-toggle="dropdown" href="#">Cuentas<b class="caret bottom-up"></b></a>
+	              	<ul class="dropdown-menu bottom-up pull-right">
+	              		<li><a href="#">Cuentas Por Pagar</a></li>
+	              		<li><a href="#">Historial de Pagos</a></li>
+	              	</ul>
+	              </li>
+	              <li class="dropdown">
+	              	<a class="dropdown-toggle" data-toggle="dropdown" href="#">Usuario<b class="caret bottom-up"></b></a>
+	              	<ul class="dropdown-menu bottom-up pull-right">
+	              		<li><a href="#">Cambiar Contraseña</a></li>
+	              		<li><a href="#">Editar Perfil</a></li>
+	              		<li class="divider"></li>
+	              		<li><a href="#">Cerrar Sesión</a></li>
+	              	</ul>
+	              </li>
+	            </ul>
+	          </nav>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+	</div> -->
+	<div id="main-container">
 		<div id="header">
-			<h1><?php echo $this->Html->link($cakeDescription, 'http://cakephp.org'); ?></h1>
-		</div>
+		 <h1><?php echo $this->Html->link($cakeDescription, 'http://cakephp.org'); ?></h1> 
+ 			<?php $this->BootstrapNavbar->create(array('fixed' => 'top', 'responsive' => 'false')) ;
+			$this->BootstrapNavbar->brand('Multiproveedores') ;
+			$this->BootstrapNavbar->link('Solicitudes', array('controller' => 'blog', 'action' => 'index')) ;
+			$this->BootstrapNavbar->link('Cotizaciones', array('controller' => 'blog', 'action' => 'index')) ;
+			$this->BootstrapNavbar->link('Órdenes', array('controller' => 'blog', 'action' => 'index')) ;
+			$this->BootstrapNavbar->link('Cuentas', array('controller' => 'blog', 'action' => 'index')) ;
+			$this->BootstrapNavbar->link('Usuario', array('controller' => 'blog', 'action' => 'index')) ;
+			$this->BootstrapNavbar->end() ; 
+			echo $this->BootstrapNavbar->compile () ; ?>
+		</div> 
 		<div id="content">
 
 			<?php echo $this->Session->flash(); ?>
