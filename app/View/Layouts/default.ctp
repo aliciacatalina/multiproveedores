@@ -17,7 +17,7 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-$cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework');
+$cakeDescription = __d('cake_dev', 'Multiproveedores');
 ?>
 <!DOCTYPE html>
 <html>
@@ -30,7 +30,8 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 	<?php
 		echo $this->Html->meta('icon');
 
-		echo $this->Html->css('cake.generic');
+		echo $this->Html->css('furatto');
+		echo $this->Html->css('examples');
 
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
