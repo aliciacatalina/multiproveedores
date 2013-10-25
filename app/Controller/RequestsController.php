@@ -233,7 +233,7 @@ class RequestsController extends AppController {
 		if($this->RequestHandler->isAjax()){
 			$this->autoRender = false;
 			$this->Request->Content->create();
-			$content['comment'] = $this->request->data;
+			$content['comment'] = "hola";
 			$this->Request->Content->save($content);
 			$this->set('val','test ok');
 			$this->set('_serialize',array('val'));
