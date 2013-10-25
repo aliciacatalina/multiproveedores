@@ -235,10 +235,8 @@ class RequestsController extends AppController {
 			$this->Request->Content->create();
 			$content['comment'] = "hola";
 			$this->Request->Content->save($content);
-			return new CakeResponse(array('body'=> json_encode(array('val'=>'test ok')),'status'=>200));
+			return new CakeResponse(array('status'=>200));
 		} else 
-			$this->set('val','test bad');
-			$this->set('_serialize',array('val'));
-			$this->response->statusCode(500);
+			return new CakeResponse(array('status'=>500));
 	}
 }
