@@ -8,7 +8,7 @@ App::uses('AppController', 'Controller');
 */
 class RequestsController extends AppController {
 
-	public $components = array('Paginator');
+	public $components = array('Paginator', 'RequestHandler');
 
 
 	public function beforeFilter() {
@@ -230,13 +230,17 @@ class RequestsController extends AppController {
 	 */
 	public function newOnlineRequest() {
 
-		if ($this->request->is('ajax') or $this->request->is('post')) {
+		if ($this->request->is('ajax') {
 			$this->autoRender = false;
 			$this->Request->Content->create();
 			$content['comment'] = $this->request->data;
 			$this->Request->Content->save($content);
-			return "SIII";
+			$this->set('val','test ok');
+			$this->set('_serialize',array('val'));
+			$this->response->statusCode(200);
 		} else 
-			return "NOOO";
+			$this->set('val','test bad');
+			$this->set('_serialize',array('val'));
+			$this->response->statusCode(500);
 	}
 }
