@@ -63,7 +63,7 @@
 <div class="related">
 	<h3><?php echo __('Related Quotes'); ?></h3>
 	<?php if (!empty($request['Quote'])): ?>
-	<table cellpadding = "0" cellspacing = "0">
+	<table>
 	<tr>
 		<th><?php echo __('Id'); ?></th>
 		<th><?php echo __('Request Id'); ?></th>

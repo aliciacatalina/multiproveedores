@@ -32,6 +32,7 @@ $cakeDescription = __d('cake_dev', 'Multiproveedores');
 
 		echo $this->Html->css('furatto');
 		echo $this->Html->css('examples');
+		echo $this->Html->css('custom');
 
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
@@ -52,7 +53,7 @@ $cakeDescription = __d('cake_dev', 'Multiproveedores');
 		// </div>
 	} ?>
 
-		<div id="content">
+		<div id="content" class="inner-960">
 
 			<?php echo $this->Session->flash(); ?>
 
