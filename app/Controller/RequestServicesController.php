@@ -22,7 +22,7 @@ class RequestServicesController extends AppController {
 
             $this->autoRender = false;
             $this->Content->create();
-            $content['comment'] = $this->request->data['comment'];
+            $content['comment'] = $this->request->data['comentario'];
             $this->Content->save($content);
             echo $content;
     }
