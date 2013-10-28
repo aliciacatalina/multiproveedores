@@ -15,7 +15,7 @@ $( "button[type='submit']" ).click(function( event ) {
 	    var formAsJson = ConvertFormToJSON(form);
 	    alert(JSON.stringify(formAsJson));
 	    $.ajax({
-			url: 'http://localhost:8888/multiproveedores/requestServices/newOnlineRequest',
+			url: 'http://multiproveedor.herokuapp.com/requestServices/newOnlineRequest',
 			type: 'POST',
 			contentType: 'application/json',
 			data: JSON.stringify(formAsJson),
