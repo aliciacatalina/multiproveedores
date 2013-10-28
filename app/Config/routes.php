@@ -36,6 +36,8 @@
  * Load all plugin routes. See the CakePlugin documentation on
  * how to customize the loading of plugin routes.
  */
+	Router::mapResources('request_services');
+	Router::parseExtensions();
 	CakePlugin::routes();
 
 /**
