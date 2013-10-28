@@ -2,25 +2,17 @@
 <head>
 </head>
 <body>
-	<form action="procesarForma.php" method="post">
-		Cliente-Campo1:<input name="cl-campo1" type="text">
-		Cliente-Campo2:<input name="cl-campo2" type="text"><br>
-		Producto-Campo1:<input name="pd-campo1" type="text">
-		Producto-Campo2:<input name="pd-campo2" type="text"><br>
-		Comentario:<input name="cm-comentario" type="text"><br>
+	<form id="forma">
+		Cliente-Campo1:<input name="campo1" type="text">
+		Cliente-Campo2:<input name="campo2" type="text"><br>
+		Producto-Campo1:<input name="campo1" type="text">
+		Producto-Campo2:<input name="campo2" type="text"><br>
+		Comentario:<input name="comentario" type="text"><br>
 		<button type="submit">Enviar</button>
 	</form>
 	<!-- SCRIPT que se deberá añadir a las paginas -->
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script> 
-	<script>	
-	$( "button[type='submit']" ).click(function( event ) {		
-		//URL a pagina en sistema multiproveedor
-	  	var url = "procesarForma2.php";
-	 
-	    // AJAX post
-	    var posting = $.post( url,$( "form" ).serialize());
-	});
-	</script>
+	<script src="../app/webroot/js/formasPaginas.js"></script>
 	<!-- -->
 </body>
 </html>
