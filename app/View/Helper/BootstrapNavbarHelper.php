@@ -337,7 +337,7 @@ class BootstrapNavbarHelper extends AppHelper {
             $link[] = $this->Html->tag('li', $res['inner'], $res['class'] ? array('class' => $res['class']) : array()) ;
         }
         $list = $this->Html->tag('ul', implode('', $link), array(
-            'class' => 'dropdown-menu'
+            'class' => 'dropdown-menu bottom-up pull-right'
         )) ;
         $class = ($menu['type'] === 'menu') ? 'dropdown' : 'dropdown-submenu' ;
         if ($menu['pull'] !== 'auto') {
@@ -433,6 +433,7 @@ class BootstrapNavbarHelper extends AppHelper {
                 $inner = $brand.$inner ;
             }
             $inner = $this->Html->tag('div', $inner, array('class' => 'nav-collapse collapse')) ;
+            $inner = $this->Html->tag('nav', $inner, array('id' => 'menu')) ;
             if ($this->brand !== null && !$this->brand['collapse']) {
                 $inner = $brand.$inner ;
             }

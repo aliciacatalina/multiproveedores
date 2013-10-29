@@ -1,6 +1,6 @@
 <div class="requests index">
 	<h2><?php echo __('Requests'); ?></h2>
-	<table>
+	<table class="table table-striped">
 	<tr>
 			<th><?php echo $this->Paginator->sort('id'); ?></th>
 			<th><?php echo $this->Paginator->sort('category_id'); ?></th>

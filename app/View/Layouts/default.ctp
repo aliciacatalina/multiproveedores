@@ -33,6 +33,9 @@ $cakeDescription = __d('cake_dev', 'Multiproveedores');
 		echo $this->Html->css('furatto');
 		echo $this->Html->css('examples');
 		echo $this->Html->css('custom');
+		echo $this->Html->script('jquery');
+		echo $this->Html->script('furatto');
+		echo $this->Html->script('furatto-demo');
 
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
@@ -41,16 +44,33 @@ $cakeDescription = __d('cake_dev', 'Multiproveedores');
 </head>
 <body>
 	<?php if ($this->Session->read('Auth.User')){ 
- 			$this->BootstrapNavbar->create(array('fixed' => 'top', 'responsive' => 'false')) ;
-			$this->BootstrapNavbar->brand('Multiproveedores') ;
-			$this->BootstrapNavbar->link('Solicitudes', array('controller' => 'blog', 'action' => 'index')) ;
-			$this->BootstrapNavbar->link('Cotizaciones', array('controller' => 'blog', 'action' => 'index')) ;
-			$this->BootstrapNavbar->link('Órdenes', array('controller' => 'blog', 'action' => 'index')) ;
-			$this->BootstrapNavbar->link('Cuentas', array('controller' => 'blog', 'action' => 'index')) ;
-			$this->BootstrapNavbar->link('Usuario', array('controller' => 'blog', 'action' => 'index')) ;
-			$this->BootstrapNavbar->end() ; 
-			echo $this->BootstrapNavbar->compile () ;
-		// </div>
+		$this->BootstrapNavbar->create (array('fixed'=>'top', 'responsive'=>'false')) ;
+        $this->BootstrapNavbar->brand('Multiproveedores') ;
+        $this->BootstrapNavbar->beginMenu ('Solicitudes') ;
+            $this->BootstrapNavbar->link ('Solicitudes Pendientes', array('controller'=>'requests', 'action'=>'index')) ;
+            $this->BootstrapNavbar->link ('Solicitudes Activas', array('controller' => 'requests', 'action'=>'index')) ;
+            $this->BootstrapNavbar->link ('Crear Solicitud', array('controller' => 'requests', 'action'=>'add')) ;
+        $this->BootstrapNavbar->endMenu () ;
+        $this->BootstrapNavbar->beginMenu ('Cotizaciones') ;
+            $this->BootstrapNavbar->link ('Cotizaciones Pendientes', array('controller'=>'quotes', 'action'=>'index')) ;
+        $this->BootstrapNavbar->endMenu () ;
+        $this->BootstrapNavbar->beginMenu ('Ordenes') ;
+            $this->BootstrapNavbar->link ('Ordenes por Cerrar', array('controller'=>'orders', 'action'=>'index')) ;
+        $this->BootstrapNavbar->endMenu () ;
+        $this->BootstrapNavbar->beginMenu ('Cuentas') ;
+            $this->BootstrapNavbar->link ('Cuentas por Pagar', array('controller'=>'accounts', 'action'=>'index')) ;
+            $this->BootstrapNavbar->link ('Historial de Pagos', array('controller' => 'accounts', 'action'=>'index')) ;
+        $this->BootstrapNavbar->endMenu () ;
+        $this->BootstrapNavbar->beginMenu ('Usuario') ;
+            $this->BootstrapNavbar->link ('Cambiar Contraseña', array('controller'=>'users', 'action'=>'index')) ;
+            $this->BootstrapNavbar->link ('Editar Perfil', array('controller' => 'users', 'action'=>'index')) ;
+            $this->BootstrapNavbar->divider() ;
+            $this->BootstrapNavbar->link ('Cerrar Sesión', array('controller' => 'users', 'action'=>'logout')) ;
+        $this->BootstrapNavbar->endMenu () ;
+    $this->BootstrapNavbar->end () ;
+    
+    echo $this->BootstrapNavbar->compile () ;
+
 	} ?>
 
 		<div id="content" class="inner-960">

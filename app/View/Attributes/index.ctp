@@ -1,6 +1,6 @@
 <div class="attributes index">
 	<h2><?php echo __('Attributes'); ?></h2>
-	<table cellpadding="10" cellspacing="0">
+	<table cellpadding="10" cellspacing="0" class="table table-striped">
 	<tr>
 			<th><?php echo $this->Paginator->sort('id'); ?></th>
 			<th><?php echo $this->Paginator->sort('name'); ?></th>
