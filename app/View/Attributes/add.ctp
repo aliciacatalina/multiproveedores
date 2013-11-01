@@ -5,7 +5,7 @@
 	<?php
 		echo $this->Form->input('name');
 		echo $this->Form->input('data_type');
-		echo $this->Form->input('Product');
+		echo $this->Form->input('Type');
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>

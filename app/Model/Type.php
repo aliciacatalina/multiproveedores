@@ -69,19 +69,7 @@ class Type extends AppModel {
  * @var array
  */
 	public $hasMany = array(
-		'Attribute' => array(
-			'className' => 'Attribute',
-			'foreignKey' => 'type_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		),
+		
 		'Product' => array(
 			'className' => 'Product',
 			'foreignKey' => 'type_id',

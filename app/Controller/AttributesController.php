@@ -57,7 +57,7 @@ class AttributesController extends AppController {
 		}
 		$types = $this->Attribute->Type->find('list');
 		$products = $this->Attribute->Product->find('list');
-		$this->set(compact('types', 'products'));
+		$this->set(compact('types'));
 	}
 
 /**

@@ -5,7 +5,6 @@
 	<?php
 		echo $this->Form->input('id');
 		echo $this->Form->input('type_name');
-		echo $this->Form->input('Supplier');
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>
