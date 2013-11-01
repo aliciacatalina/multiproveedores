@@ -17,7 +17,7 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-$cakeDescription = __d('cake_dev', 'Multiproveedores');
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -45,7 +45,7 @@ $cakeDescription = __d('cake_dev', 'Multiproveedores');
 <body>
 	<?php if ($this->Session->read('Auth.User')){ 
 		$this->BootstrapNavbar->create (array('fixed'=>'top', 'responsive'=>'false')) ;
-        $this->BootstrapNavbar->brand('Multiproveedores') ;
+        $this->BootstrapNavbar->brand('Multiproveedores', array('controller'=>'requests', 'action'=>'index')) ;
         $this->BootstrapNavbar->beginMenu ('Solicitudes') ;
             $this->BootstrapNavbar->link ('Solicitudes Pendientes', array('controller'=>'requests', 'action'=>'index')) ;
             $this->BootstrapNavbar->link ('Solicitudes Activas', array('controller' => 'requests', 'action'=>'index')) ;
@@ -63,7 +63,6 @@ $cakeDescription = __d('cake_dev', 'Multiproveedores');
         $this->BootstrapNavbar->endMenu () ;
         $this->BootstrapNavbar->beginMenu ('Usuario') ;
             $this->BootstrapNavbar->link ('Cambiar Contraseña', array('controller'=>'users', 'action'=>'index')) ;
-            $this->BootstrapNavbar->link ('Editar Perfil', array('controller' => 'users', 'action'=>'index')) ;
             $this->BootstrapNavbar->divider() ;
             $this->BootstrapNavbar->link ('Cerrar Sesión', array('controller' => 'users', 'action'=>'logout')) ;
         $this->BootstrapNavbar->endMenu () ;
