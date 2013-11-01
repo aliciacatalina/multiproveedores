@@ -78,7 +78,7 @@ class BootstrapNavbarHelper extends AppHelper {
      * @param options Options passed to link method
      *     
     **/
-    public function brand ($name, $url = '/', $collapse = false, $options = array()) {
+    public function brand ($name, $url , $collapse = false, $options = array()) {
         $this->brand = array(
             'text' => $name,
             'url' => $url,
