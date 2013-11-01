@@ -4,7 +4,7 @@
 		<legend><?php echo __('Add Type'); ?></legend>
 	<?php
 		echo $this->Form->input('type_name');
-		echo $this->Form->input('Supplier');
+		//echo $this->Form->input('Supplier');
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>

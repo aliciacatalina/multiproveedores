@@ -54,9 +54,7 @@ class TypesController extends AppController {
 			} else {
 				$this->Session->setFlash(__('The type could not be saved. Please, try again.'));
 			}
-		}
-		$suppliers = $this->Type->Supplier->find('list');
-		$this->set(compact('suppliers'));
+		}		
 	}
 
 /**
@@ -80,9 +78,7 @@ class TypesController extends AppController {
 		} else {
 			$options = array('conditions' => array('Type.' . $this->Type->primaryKey => $id));
 			$this->request->data = $this->Type->find('first', $options);
-		}
-		$suppliers = $this->Type->Supplier->find('list');
-		$this->set(compact('suppliers'));
+		}		
 	}
 
 /**
