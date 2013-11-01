@@ -83,7 +83,8 @@ public function logout() {
  * @param string $id
  * @return void
  */
-	public function edit($id = null) {
+	public function edit($id = null)
+	{
 		if (!$this->User->exists($id)) {
 			throw new NotFoundException(__('Invalid user'));
 		}
