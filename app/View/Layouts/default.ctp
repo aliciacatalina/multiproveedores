@@ -37,6 +37,7 @@
 		echo $this->Html->script('furatto');
 		echo $this->Html->script('furatto-demo');
 
+
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
 		echo $this->fetch('script');
