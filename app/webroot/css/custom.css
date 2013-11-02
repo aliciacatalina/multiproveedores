@@ -9,6 +9,12 @@
 body {
 	padding-top: 60px;
 }
+.actions {
+	float: right;
+}
+table .actions {
+	float: none;
+}
 .flashMessage, .message {
 	padding:8px 35px 8px 14px;
 	margin-bottom:20px;

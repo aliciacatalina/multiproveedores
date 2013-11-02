@@ -13,9 +13,9 @@
 		</dd>
 	</dl>
 </div>
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
+<div class="actions dropdown">
+	<a class="dropdown-toggle" data-toggle="dropdown" href="#"> <?php echo __('Actions'); ?><b class="caret bottom-up"></b></a>
+		<ul class="dropdown-menu bottom-up pull-right">
 		<li><?php echo $this->Html->link(__('Edit Type'), array('action' => 'edit', $type['Type']['id'])); ?> </li>
 		<li><?php echo $this->Form->postLink(__('Delete Type'), array('action' => 'delete', $type['Type']['id']), null, __('Are you sure you want to delete # %s?', $type['Type']['id'])); ?> </li>
 		<li><?php echo $this->Html->link(__('List Types'), array('action' => 'index')); ?> </li>
@@ -53,8 +53,9 @@
 	</table>
 <?php endif; ?>
 
-	<div class="actions">
-		<ul>
+	<div class="actions dropdown">
+	<a class="dropdown-toggle" data-toggle="dropdown" href="#"><b class="caret bottom-up"></b></a>
+		<ul class="dropdown-menu bottom-up pull-right">
 			<li><?php echo $this->Html->link(__('New Attribute'), array('controller' => 'attributes', 'action' => 'add')); ?> </li>
 		</ul>
 	</div>
@@ -131,8 +132,9 @@
 	</table>
 <?php endif; ?>
 
-	<div class="actions">
-		<ul>
+	<div class="actions dropdown">
+	<a class="dropdown-toggle" data-toggle="dropdown" href="#"><b class="caret bottom-up"></b></a>
+		<ul class="dropdown-menu bottom-up pull-right">
 			<li><?php echo $this->Html->link(__('New Supplier'), array('controller' => 'suppliers', 'action' => 'add')); ?> </li>
 		</ul>
 	</div>
