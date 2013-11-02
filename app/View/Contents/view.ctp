@@ -18,16 +18,16 @@
 		</dd>
 	</dl>
 </div>
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
-		<li><?php echo $this->Html->link(__('Edit Content'), array('action' => 'edit', $content['Content']['id'])); ?> </li>
-		<li><?php echo $this->Form->postLink(__('Delete Content'), array('action' => 'delete', $content['Content']['id']), null, __('Are you sure you want to delete # %s?', $content['Content']['id'])); ?> </li>
-		<li><?php echo $this->Html->link(__('List Contents'), array('action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Content'), array('action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Requests'), array('controller' => 'requests', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Request'), array('controller' => 'requests', 'action' => 'add')); ?> </li>
-	</ul>
+<div class="actions dropdown">
+	<a class="dropdown-toggle" data-toggle="dropdown" href="#"> <?php echo __('Actions'); ?><b class="caret bottom-up"></b></a>
+		<ul class="dropdown-menu bottom-up pull-right">
+			<li><?php echo $this->Html->link(__('Edit Content'), array('action' => 'edit', $content['Content']['id'])); ?> </li>
+			<li><?php echo $this->Form->postLink(__('Delete Content'), array('action' => 'delete', $content['Content']['id']), null, __('Are you sure you want to delete # %s?', $content['Content']['id'])); ?> </li>
+			<li><?php echo $this->Html->link(__('List Contents'), array('action' => 'index')); ?> </li>
+			<li><?php echo $this->Html->link(__('New Content'), array('action' => 'add')); ?> </li>
+			<li><?php echo $this->Html->link(__('List Requests'), array('controller' => 'requests', 'action' => 'index')); ?> </li>
+			<li><?php echo $this->Html->link(__('New Request'), array('controller' => 'requests', 'action' => 'add')); ?> </li>
+		</ul>
 </div>
 <div class="related">
 	<h3><?php echo __('Related Requests'); ?></h3>
@@ -64,8 +64,9 @@
 	</table>
 <?php endif; ?>
 
-	<div class="actions">
-		<ul>
+<div class="actions dropdown">
+	<a class="dropdown-toggle" data-toggle="dropdown" href="#"><b class="caret bottom-up"></b></a>
+		<ul class="dropdown-menu bottom-up pull-right">
 			<li><?php echo $this->Html->link(__('New Request'), array('controller' => 'requests', 'action' => 'add')); ?> </li>
 		</ul>
 	</div>
