@@ -7,7 +7,7 @@ App::uses('AppController', 'Controller');
  * @property PaginatorComponent $Paginator
  */
 class TypesController extends AppController {
-
+	public $uses = array('Type', 'DataType');
 /**
  * Components
  *
@@ -46,15 +46,57 @@ class TypesController extends AppController {
  * @return void
  */
 	public function add() {
-		if ($this->request->is('post')) {
+		if ($this->request->is('post'))
+		{
+			$transaction = $this->Type->getDataSource();
+			$transaction->begin();
+			$failure = false;
+
+			$attributes = json_decode($this->request->data['Type']['attributes']);
 			$this->Type->create();
-			if ($this->Type->save($this->request->data)) {
+			
+			$type = $this->request->data['Type'];
+			if($this->Type->save($type))
+			{
+				
+				foreach ($attributes as $attribute) {
+					$this->Type->Attribute->create();
+					$attribute->type_id = $this->Type->id;
+					if(!$this->Type->Attribute->save($attribute))
+					{
+						$transaction->rollback();
+						$this->Session->setFlash(__('The type could not be saved. Please, try again.'));
+						$failure = true;
+						break;
+					}
+				}
+				
+			}
+			else
+			{
+				$transaction->rollback();
+				$failure = true;
+				$this->Session->setFlash(__('The type could not be saved. Please, try again.'));		
+			}
+
+			if(!$failure)
+			{
+				$transaction->commit();
 				$this->Session->setFlash(__('The type has been saved.'));
 				return $this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The type could not be saved. Please, try again.'));
 			}
-		}		
+		}
+		else
+		{
+			$this->DataType->recursive = 0;
+			$dataTypes = $this->DataType->find('all');
+			$dataTypesForSelect = array();
+			foreach ($dataTypes as $data_type)
+			{
+				$dataTypesForSelect[$data_type['DataType']['id']] = $data_type['DataType']['name'];
+			}
+			$this->set('data_types', $dataTypesForSelect);
+		}	
 	}
 
 /**
