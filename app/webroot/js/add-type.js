@@ -1,6 +1,7 @@
 $(document).ready(function()
 {
 	attributes = new Array();
+	$('#attributes').val(JSON.stringify(attributes));
 });
 
 function add_attribute()
@@ -17,7 +18,7 @@ function add_attribute()
 
 	attribute = new Object();
 	attribute.name = attribute_name;
-	attribute.type_id = attribute_type;
+	attribute.data_type_id = attribute_type;
 
 	attributes.push(attribute);
 	$('#attributes').val(JSON.stringify(attributes));

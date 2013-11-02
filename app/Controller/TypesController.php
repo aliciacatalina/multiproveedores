@@ -13,17 +13,17 @@ class TypesController extends AppController {
  *
  * @var array
  */
-	public $components = array('Paginator');
+public $components = array('Paginator');
 
 /**
  * index method
  *
  * @return void
  */
-	public function index() {
-		$this->Type->recursive = 0;
-		$this->set('types', $this->Paginator->paginate());
-	}
+public function index() {
+	$this->Type->recursive = 0;
+	$this->set('types', $this->Paginator->paginate());
+}
 
 /**
  * view method
@@ -32,72 +32,77 @@ class TypesController extends AppController {
  * @param string $id
  * @return void
  */
-	public function view($id = null) {
-		if (!$this->Type->exists($id)) {
-			throw new NotFoundException(__('Invalid type'));
-		}
-		$options = array('conditions' => array('Type.' . $this->Type->primaryKey => $id));
-		$this->set('type', $this->Type->find('first', $options));
+public function view($id = null) {
+	if (!$this->Type->exists($id)) {
+		throw new NotFoundException(__('Invalid type'));
 	}
+	$options = array('conditions' => array('Type.' . $this->Type->primaryKey => $id));
+	$this->set('type', $this->Type->find('first', $options));
+}
 
 /**
  * add method
  *
  * @return void
  */
-	public function add() {
-		if ($this->request->is('post'))
-		{
-			$transaction = $this->Type->getDataSource();
-			$transaction->begin();
-			$failure = false;
+public function add() {
+	if ($this->request->is('post'))
+	{
+		$transaction = $this->Type->getDataSource();
+		$transaction->begin();
+		$failure = false;
 
-			$attributes = json_decode($this->request->data['Type']['attributes']);
-			$this->Type->create();
-			
-			$type = $this->request->data['Type'];
-			if($this->Type->save($type))
+		$attributes = json_decode($this->request->data['Type']['attributes']);
+		$this->Type->create();
+
+		$type = $this->request->data['Type'];
+		if($this->Type->saveAll($type))
+		{
+			if(is_null($attributes)){
+				$this->Session->setFlash(__('No puedes crear tipos sin atributos.'));
+				$failure = true;
+			}
+			else
 			{
-				
 				foreach ($attributes as $attribute) {
 					$this->Type->Attribute->create();
 					$attribute->type_id = $this->Type->id;
 					if(!$this->Type->Attribute->save($attribute))
 					{
 						$transaction->rollback();
-						$this->Session->setFlash(__('The type could not be saved. Please, try again.'));
+						$this->Session->setFlash(__('B - The type could not be saved. Please, try again.'));
 						$failure = true;
 						break;
 					}
 				}
-				
-			}
-			else
-			{
-				$transaction->rollback();
-				$failure = true;
-				$this->Session->setFlash(__('The type could not be saved. Please, try again.'));		
-			}
-
-			if(!$failure)
-			{
-				$transaction->commit();
-				$this->Session->setFlash(__('The type has been saved.'));
-				return $this->redirect(array('action' => 'index'));
 			}
 		}
 		else
 		{
-			$this->DataType->recursive = 0;
-			$dataTypes = $this->DataType->find('all');
-			$dataTypesForSelect = array();
-			foreach ($dataTypes as $data_type)
-			{
-				$dataTypesForSelect[$data_type['DataType']['id']] = $data_type['DataType']['name'];
-			}
-			$this->set('data_types', $dataTypesForSelect);
-		}	
+			$transaction->rollback();
+			$failure = true;
+			$this->Session->setFlash(__('A - The type could not be saved. Please, try again.'));		
+		}
+
+		if(!$failure)
+		{
+			$transaction->commit();
+			$this->Session->setFlash(__('The type has been saved.'));
+			return $this->redirect(array('action' => 'index'));
+		}
 	}
+	else
+	{
+		$this->DataType->recursive = 0;
+		$dataTypes = $this->DataType->find('all');
+		$dataTypesForSelect = array();
+		foreach ($dataTypes as $data_type)
+		{
+			$dataTypesForSelect[$data_type['DataType']['id']] = $data_type['DataType']['name'];
+		}
+		$this->set('data_types', $dataTypesForSelect);
+	}	
+}
 
 /**
  * edit method
@@ -106,22 +111,22 @@ class TypesController extends AppController {
  * @param string $id
  * @return void
  */
-	public function edit($id = null) {
-		if (!$this->Type->exists($id)) {
-			throw new NotFoundException(__('Invalid type'));
-		}
-		if ($this->request->is(array('post', 'put'))) {
-			if ($this->Type->save($this->request->data)) {
-				$this->Session->setFlash(__('The type has been saved.'));
-				return $this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The type could not be saved. Please, try again.'));
-			}
-		} else {
-			$options = array('conditions' => array('Type.' . $this->Type->primaryKey => $id));
-			$this->request->data = $this->Type->find('first', $options);
-		}		
+public function edit($id = null) {
+	if (!$this->Type->exists($id)) {
+		throw new NotFoundException(__('Invalid type'));
 	}
+	if ($this->request->is(array('post', 'put'))) {
+		if ($this->Type->save($this->request->data)) {
+			$this->Session->setFlash(__('The type has been saved.'));
+			return $this->redirect(array('action' => 'index'));
+		} else {
+			$this->Session->setFlash(__('The type could not be saved. Please, try again.'));
+		}
+	} else {
+		$options = array('conditions' => array('Type.' . $this->Type->primaryKey => $id));
+		$this->request->data = $this->Type->find('first', $options);
+	}		
+}
 
 /**
  * delete method
@@ -130,16 +135,16 @@ class TypesController extends AppController {
  * @param string $id
  * @return void
  */
-	public function delete($id = null) {
-		$this->Type->id = $id;
-		if (!$this->Type->exists()) {
-			throw new NotFoundException(__('Invalid type'));
-		}
-		$this->request->onlyAllow('post', 'delete');
-		if ($this->Type->delete()) {
-			$this->Session->setFlash(__('The type has been deleted.'));
-		} else {
-			$this->Session->setFlash(__('The type could not be deleted. Please, try again.'));
-		}
-		return $this->redirect(array('action' => 'index'));
-	}}
+public function delete($id = null) {
+	$this->Type->id = $id;
+	if (!$this->Type->exists()) {
+		throw new NotFoundException(__('Invalid type'));
+	}
+	$this->request->onlyAllow('post', 'delete');
+	if ($this->Type->delete()) {
+		$this->Session->setFlash(__('The type has been deleted.'));
+	} else {
+		$this->Session->setFlash(__('The type could not be deleted. Please, try again.'));
+	}
+	return $this->redirect(array('action' => 'index'));
+}}
