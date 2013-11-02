@@ -1,5 +1,15 @@
 <div class="productsSuppliers index">
 	<h2><?php echo __('Products Suppliers'); ?></h2>
+	<div class="actions dropdown">
+		<a class="dropdown-toggle" data-toggle="dropdown" href="#"> <?php echo __('Actions'); ?><b class="caret bottom-up"></b></a>
+			<ul class="dropdown-menu bottom-up pull-right">
+				<li><?php echo $this->Html->link(__('New Products Supplier'), array('action' => 'add')); ?></li>
+				<li><?php echo $this->Html->link(__('List Suppliers'), array('controller' => 'suppliers', 'action' => 'index')); ?> </li>
+				<li><?php echo $this->Html->link(__('New Supplier'), array('controller' => 'suppliers', 'action' => 'add')); ?> </li>
+				<li><?php echo $this->Html->link(__('List Products'), array('controller' => 'products', 'action' => 'index')); ?> </li>
+				<li><?php echo $this->Html->link(__('New Product'), array('controller' => 'products', 'action' => 'add')); ?> </li>
+			</ul>
+	</div>
 	<table cellpadding="10" cellspacing="0" class="table table-striped">
 	<tr>
 			<th><?php echo $this->Paginator->sort('id'); ?></th>
@@ -43,14 +53,4 @@
 		echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));
 	?>
 	</div>
-</div>
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
-		<li><?php echo $this->Html->link(__('New Products Supplier'), array('action' => 'add')); ?></li>
-		<li><?php echo $this->Html->link(__('List Suppliers'), array('controller' => 'suppliers', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Supplier'), array('controller' => 'suppliers', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Products'), array('controller' => 'products', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Product'), array('controller' => 'products', 'action' => 'add')); ?> </li>
-	</ul>
 </div>

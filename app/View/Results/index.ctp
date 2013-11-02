@@ -1,5 +1,13 @@
 <div class="results index">
 	<h2><?php echo __('Results'); ?></h2>
+	<div class="actions dropdown">
+	<a class="dropdown-toggle" data-toggle="dropdown" href="#"> <?php echo __('Actions'); ?><b class="caret bottom-up"></b></a>
+		<ul class="dropdown-menu bottom-up pull-right">
+			<li><?php echo $this->Html->link(__('New Result'), array('action' => 'add')); ?></li>
+			<li><?php echo $this->Html->link(__('List Quotes'), array('controller' => 'quotes', 'action' => 'index')); ?> </li>
+			<li><?php echo $this->Html->link(__('New Quote'), array('controller' => 'quotes', 'action' => 'add')); ?> </li>
+		</ul>
+</div>
 	<table cellpadding="10" cellspacing="0" class="table table-striped">
 	<tr>
 			<th><?php echo $this->Paginator->sort('id'); ?></th>
@@ -31,12 +39,4 @@
 		echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));
 	?>
 	</div>
-</div>
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
-		<li><?php echo $this->Html->link(__('New Result'), array('action' => 'add')); ?></li>
-		<li><?php echo $this->Html->link(__('List Quotes'), array('controller' => 'quotes', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Quote'), array('controller' => 'quotes', 'action' => 'add')); ?> </li>
-	</ul>
 </div>
