@@ -1,5 +1,7 @@
 <?php
 App::uses('AppController', 'Controller');
+App::uses('CakeEmail', 'Network/Email');
+App::uses( 'EmailConfig', 'Model');
 /**
  * Quotes Controller
  *
@@ -50,7 +52,21 @@ class QuotesController extends AppController {
 			$this->Quote->create();
 			if ($this->Quote->save($this->request->data)) {
 				$this->Session->setFlash(__('The quote has been saved.'));
-				return $this->redirect(array('action' => 'index'));
+				//Enviar correo al proveedor				
+				$correoUsuario = $this->Quote->User->find('first', array('conditions' => array('User.id' => $this->request->data["Quote"]["user_id"])));				
+				$correoProveedor = $this->Quote->Supplier->find('first', array('conditions' => array('Supplier.id' => $this->request->data["Quote"]["supplier_id"])));				
+				
+				//Cargar configuracion de correo
+				$emailConfig = new EmailConfig();
+
+				$Email = new CakeEmail();				
+				$Email->config($emailConfig->cargarConfiguracion());
+				$Email->from($correoUsuario["User"]["email"])
+				    ->to($correoProveedor["Supplier"]["contact_email"])
+				    ->subject('Prueba de correo')
+				    ->send('Hola! Este es un correo de pruebas.');
+				    
+				return $this->redirect(array('action' => 'index'));				
 			} else {
 				$this->Session->setFlash(__('The quote could not be saved. Please, try again.'));
 			}
