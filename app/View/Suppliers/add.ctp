@@ -28,7 +28,6 @@
 		echo $this->Form->input('accepted_quotes');
 		echo $this->Form->input('rejected_quotes');
 		echo $this->Form->input('Category');
-		echo $this->Form->input('Product');
 		echo $this->Form->input('Type');
 	?>
 	</fieldset>
