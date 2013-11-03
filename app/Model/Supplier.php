@@ -39,25 +39,9 @@ class Supplier extends AppModel {
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-			'listo' => array(
-				'rule' => array('listo'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
+			),			
 		),
-		'corporate_name' => array(
-			'alphaNumeric' => array(
-				'rule' => array('alphaNumeric'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
+		'corporate_name' => array(			
 			'maxLength' => array(
 				'rule' => array('maxLength', 60),
 				//'message' => 'Your custom message here',
@@ -101,15 +85,7 @@ class Supplier extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'contact_name' => array(
-			'alphaNumeric' => array(
-				'rule' => array('alphaNumeric'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
+		'contact_name' => array(			
 			'maxLength' => array(
 				'rule' => array('maxLength', 60),
 				//'message' => 'Your custom message here',
@@ -154,14 +130,7 @@ class Supplier extends AppModel {
 			),
 		),
 		'contact_telephone' => array(
-			'phone' => array(
-				'rule' => array('phone'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
+			
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
 				//'message' => 'Your custom message here',

@@ -48,17 +48,20 @@ class SuppliersController extends AppController {
 	public function add() {
 		if ($this->request->is('post')) {
 			$this->Supplier->create();
-			if ($this->Supplier->save($this->request->data)) {
-				$this->Session->setFlash(__('The supplier has been saved.'));
-				return $this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The supplier could not be saved. Please, try again.'));
+			if($this->request->data["Type"]["Type"]!=""){
+				if ($this->Supplier->save($this->request->data)) {
+					$this->Session->setFlash(__('The supplier has been saved.'));
+					return $this->redirect(array('action' => 'index'));
+				} else {
+					$this->Session->setFlash(__('The supplier could not be saved. Please, try again.'));
+				}
+			}else {
+			$this->Session->setFlash(__('No se especificó el tipo.'));
 			}
-		}
-		$categories = $this->Supplier->Category->find('list');
-		$products = $this->Supplier->Product->find('list');
+		}		
+		$categories = $this->Supplier->Category->find('list');		
 		$types = $this->Supplier->Type->find('list');
-		$this->set(compact('categories', 'products', 'types'));
+		$this->set(compact('categories',  'types'));
 	}
 
 /**
