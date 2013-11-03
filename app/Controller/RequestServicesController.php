@@ -1,6 +1,6 @@
 <?php
 class RequestServicesController extends AppController {
-	public $uses = array('Content, Requests');
+	public $uses = array('Content', 'Request', 'Category');
 	public $components = array('RequestHandler');
 
 	public function beforeFilter()
@@ -9,54 +9,66 @@ class RequestServicesController extends AppController {
 		$this->Auth->allow('newOnlineRequest');
 	}
 
+	/**
+	 * newOnlineRequest method
+	 *
+	 * @return void
+	 */
 	public function newOnlineRequest()
 	{
 		$this->response->header('Access-Control-Allow-Origin', 'http://origen.herokuapp.com');
+		$this->response->header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
 		$this->response->header('Access-Control-Allow-Headers ', 'Content-Type' );
-		$this->response->header('Content-Type ', 'application/json');
+		$this->response->header('Content-Type ', 'multipart/form-data');
 
 		$this->autoRender = false;
-
-		//Empezamos trancsaccion
 		$transaction = $this->Content->getDataSource();
 		$transaction->begin();
-
-		//Tenemos que crear el "content" y guardarlo
 		$this->Content->create();
 
-		//Obtenemos los datos a guardar a content
-		$content['xml'] = $this->xmlCreation($this->request->data);
-		$content['comment'] = $this->request->data['comentario'];
+		try{
+			$content['comment'] = $this->request->data['comentario'];
+			$content['xml'] = $this->newXml($this->request->data);
 
-		if ($this->Content->save($content)) {
+			if($this->Content->save($content)){
+				$url = $this->request->data['url'];
 
-			//Obteniendo los datos para crear la solicitud
-			
-			$request['category_id'] = $this->request->data['categoria'];
-			$request['content_id'] = $this->Content->getInsertID();
+				$this->Category->recursive = -1;
+				$url = $this->Category->findByUrl($url);
 
-			$this->Request->create();
-			if ($this->Request->save($request)) {
+				$this->Request->create();
+				$request['category_id'] = $url['Category']['id'];
+				$request['content_id'] = $this->Content->getInsertID();
 
-				//Se ha guardado exitosamente el registro por lo tanto hacemos 
-				$transaction->commit();
-				echo "funciona";
+				if ($this->Request->save($request)) {
+					$transaction->commit();
+					echo "funciona";
 
-			} else{
+				} else{
+					$transaction->rollback();
+					print_r($request);
+					echo "</br>";
+					print_r($url['Category']);
+					echo "No funciona";
+				}
+
+			} else {
 				$transaction->rollback();
-				echo "No funciona";
+				print_r($request);
+				echo "</br>";
+				print_r($url['Category']);
+				echo "no funciona";
 			}
-		} else {
-			$transaction->rollback();
-			echo "No funciona";
+		}catch(Exception $e) {
+			echo $e;
 		}
 	}
-}
 
-	public function xmlCreation($data)
+	private function newXml($data)
 	{
 		$xmlDoc = new DOMDocument('1.0');
 		$xmlDoc->formatOutput = true;
+
 		//Elemento raiz
 		$root = $xmlDoc->createElement('Request');
 		$root = $xmlDoc->appendChild($root);
@@ -69,23 +81,22 @@ class RequestServicesController extends AppController {
 		$product = $xmlDoc->createElement('Product');
 		$product = $root->appendChild($product);
 
-		//Elemento comentario
-		$comments = $xmlDoc->createElement('Comments');
-		$comments = $root->appendChild($comments);  
 
 		//Iterar y agregar los campos
 		foreach ($data as $campos => $value) {
 			$tipo = substr($campos, 0, 2);
 			$campo = substr($campos, 3);
 			switch($tipo){
-			//Campo de cliente
+
+				//Campo de cliente
 				case "cl":
 				$campo = $xmlDoc->createElement($campo);
 				$campo = $customer->appendChild($campo);
 				$valor = $xmlDoc->createTextNode($value);
 				$valor = $campo->appendChild($valor);
 				break;
-			//Campo de producto
+
+				//Campo de producto
 				case "pd":
 				$campo = $xmlDoc->createElement($campo);
 				$campo = $product->appendChild($campo);
@@ -95,5 +106,6 @@ class RequestServicesController extends AppController {
 			}
 		}
 		$xml =  $xmlDoc->saveXML();
+		return $xml;
 	}
 }
