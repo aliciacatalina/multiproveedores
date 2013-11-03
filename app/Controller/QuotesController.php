@@ -1,6 +1,7 @@
 <?php
 App::uses('AppController', 'Controller');
 App::uses('CakeEmail', 'Network/Email');
+App::uses( 'EmailConfig', 'Model');
 /**
  * Quotes Controller
  *
@@ -55,8 +56,11 @@ class QuotesController extends AppController {
 				$correoUsuario = $this->Quote->User->find('first', array('conditions' => array('User.id' => $this->request->data["Quote"]["user_id"])));				
 				$correoProveedor = $this->Quote->Supplier->find('first', array('conditions' => array('Supplier.id' => $this->request->data["Quote"]["supplier_id"])));				
 				
-				$Email = new CakeEmail();
-				$Email->config('gmail');
+				//Cargar configuracion de correo
+				$emailConfig = new EmailConfig();
+
+				$Email = new CakeEmail();				
+				$Email->config($emailConfig->cargarConfiguracion());
 				$Email->from($correoUsuario["User"]["email"])
 				    ->to($correoProveedor["Supplier"]["contact_email"])
 				    ->subject('Prueba de correo')
