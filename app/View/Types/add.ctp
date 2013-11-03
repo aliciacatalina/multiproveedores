@@ -10,7 +10,7 @@
 		<?php echo $this->Form->hidden('attributes', array("id" => 'attributes')); ?>
 		<legend>Atributos:</legend>
 		<table id="attributes_table" name="attributes_table">
-			<?php echo $this->Html->tableHeaders(array('Atibuto', 'Tipo', '')); ?>
+			<?php echo $this->Html->tableHeaders(array('Atributo', 'Tipo', 'Borrar')); ?>
 		</table>
 		<?php echo $this->Form->end(__('Crear')); ?>
 

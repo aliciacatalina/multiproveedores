@@ -7,13 +7,12 @@ App::uses('AppController', 'Controller');
  * @property PaginatorComponent $Paginator
  */
 class ProductsController extends AppController {
-
 /**
  * Components
  *
  * @var array
  */
-	public $components = array('Paginator');
+public $components = array('Paginator');
 
 /**
  * index method
@@ -55,6 +54,7 @@ class ProductsController extends AppController {
 				$this->Session->setFlash(__('The product could not be saved. Please, try again.'));
 			}
 		}
+		
 		$categories = $this->Product->Category->find('list');
 		$types = $this->Product->Type->find('list');
 		$attributes = $this->Product->Attribute->find('list');

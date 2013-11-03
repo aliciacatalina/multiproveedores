@@ -58,7 +58,7 @@ public function add() {
 		$type = $this->request->data['Type'];
 		if($this->Type->saveAll($type))
 		{
-			if(is_null($attributes)){
+			if(is_null($attributes) || count($attributes) == 0){
 				$this->Session->setFlash(__('No puedes crear tipos sin atributos.'));
 				$failure = true;
 			}
@@ -84,7 +84,11 @@ public function add() {
 			$this->Session->setFlash(__('A - The type could not be saved. Please, try again.'));		
 		}
 
-		if(!$failure)
+		if($failure)
+		{
+			$this->set_attribute_types();
+		}
+		else
 		{
 			$transaction->commit();
 			$this->Session->setFlash(__('The type has been saved.'));
@@ -93,15 +97,20 @@ public function add() {
 	}
 	else
 	{
-		$this->DataType->recursive = 0;
-		$dataTypes = $this->DataType->find('all');
-		$dataTypesForSelect = array();
-		foreach ($dataTypes as $data_type)
-		{
-			$dataTypesForSelect[$data_type['DataType']['id']] = $data_type['DataType']['name'];
-		}
-		$this->set('data_types', $dataTypesForSelect);
+		$this->set_attribute_types();
 	}	
+}
+
+private function set_attribute_types()
+{
+	$this->DataType->recursive = 0;
+	$dataTypes = $this->DataType->find('all');
+	$dataTypesForSelect = array();
+	foreach ($dataTypes as $data_type)
+	{
+		$dataTypesForSelect[$data_type['DataType']['id']] = $data_type['DataType']['name'];
+	}
+	$this->set('data_types', $dataTypesForSelect);
 }
 
 /**

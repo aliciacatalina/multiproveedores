@@ -33,9 +33,14 @@
 		echo $this->Html->css('furatto');
 		echo $this->Html->css('examples');
 		echo $this->Html->css('custom');
+		echo $this->Html->css('ui-lightness/jquery-ui');
+
+
 		echo $this->Html->script('jquery');
+		echo $this->Html->script('jquery-ui');
 		echo $this->Html->script('furatto');
-		echo $this->Html->script('furatto-demo');
+		//echo $this->Html->script('furatto-demo');
+		
 
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
