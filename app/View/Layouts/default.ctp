@@ -31,7 +31,6 @@
 		echo $this->Html->meta('icon');
 
 		echo $this->Html->css('furatto');
-		echo $this->Html->css('examples');
 		echo $this->Html->css('custom');
 		echo $this->Html->css('ui-lightness/jquery-ui');
 

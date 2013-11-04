@@ -9,6 +9,18 @@
 body {
 	padding-top: 60px;
 }
+/*******************************/
+/*       LOGIN                 */
+/*******************************/
+
+.row.login {
+  width: 30%;
+  margin: 30px auto;
+}
+
+@media (max-width: 767px) .login {
+    width: 70%;
+}
 .actions {
 	float: right;
 	margin-bottom: 20px;
