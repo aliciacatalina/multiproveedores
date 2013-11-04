@@ -39,7 +39,7 @@
 	</tr>
 	<?php foreach ($pendingRequests as $request): ?>
 	<tr>
-		<td><?php echo h($request['Request']['id']); ?>&nbsp;</td>
+		<td class="test"><?php echo h($request['Request']['id']); ?>&nbsp;</td>
 		<td>
 			<?php echo $this->Html->link($request['Category']['url'], array('controller' => 'categories', 'action' => 'view', $request['Category']['id'])); ?>
 		</td>

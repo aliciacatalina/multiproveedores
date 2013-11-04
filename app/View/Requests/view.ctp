@@ -3,7 +3,7 @@
 <div class="requests view">
 <h2><?php echo __('Request'); ?></h2>
 	<dl>
-		<dt><?php echo __('Id'); ?></dt>
+		<dt><?php echo __('Id1'); ?></dt>
 		<dd>
 			<?php echo h($request['Request']['id']); ?>
 			&nbsp;
