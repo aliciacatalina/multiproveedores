@@ -104,4 +104,16 @@ class CategoriesController extends AppController {
 			$this->Session->setFlash(__('The category could not be deleted. Please, try again.'));
 		}
 		return $this->redirect(array('action' => 'index'));
-	}}
+	}
+
+	public function categories_for_selector()
+	{
+		$categories = $this->Category->find('all');
+		$categoriesForSelector = array();
+		foreach ($categories as $category)
+		{
+			$categoriesForSelector[$category['Category']['id']] = $category['Category']['url'];
+		}
+		return $categoriesForSelector;
+	}
+}

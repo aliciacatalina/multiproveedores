@@ -1,5 +1,7 @@
 <?php
 App::uses('AppController', 'Controller');
+App::uses('TypesController', 'Controller');
+App::uses('CategoriesController', 'Controller');
 /**
 * Requests Controller
 *
@@ -9,6 +11,7 @@ App::uses('AppController', 'Controller');
 class RequestsController extends AppController {
 
 	public $components = array('Paginator');
+	public $uses = array('Request', 'Type', 'Category');
 
 	/**
 	 * funcion index (Metodo de usuario)
@@ -70,9 +73,17 @@ class RequestsController extends AppController {
 			return $this->redirect(array('action' => 'index'));
 		}
 
-			//Datos que se regresaran a la vista
-		$options = array('conditions' => array('Request.' . $this->Request->primaryKey => $id));
-		$this->set('request', $this->Request->find('first', $options));
+		//Datos que se regresaran a la vista
+		//Request
+		//$options = array('conditions' => array('Request.' . $this->Request->primaryKey => $id));
+		$this->set('request', $request);
+		//Types
+		$typesController = new TypesController();
+		$this->set('types', $typesController->types_for_selector());
+		//Categories
+		$categoriesController = new CategoriesController();
+		$this->set('categories', $categoriesController->categories_for_selector());
+
 	}
 
 	/**

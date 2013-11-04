@@ -1,5 +1,7 @@
 <?php
 App::uses('AppController', 'Controller');
+App::uses('ProductSearch', 'Lib');
+
 /**
  * Suppliers Controller
  *
@@ -71,7 +73,8 @@ class SuppliersController extends AppController {
  * @param string $id
  * @return void
  */
-	public function edit($id = null) {
+	public function edit($id = null)
+	{
 		if (!$this->Supplier->exists($id)) {
 			throw new NotFoundException(__('Invalid supplier'));
 		}
@@ -91,6 +94,41 @@ class SuppliersController extends AppController {
 		$types = $this->Supplier->Type->find('list');
 		$this->set(compact('categories', 'products', 'types'));
 	}
+
+	public function suppliersThatSupplyProduct()
+	{
+		$product_description = json_decode($this->request->data);
+		$productSearch = new ProductSearch(
+			$product_description['category'],
+			$product_description['type'],
+			$product_description['attributes']);
+
+		$products_matching = $this->Product->query($this->superQuery($productSearch));
+
+		$conditions = array();
+		if($product_description->category != '')
+		{
+			$conditions['category'] = $product_description->category;
+		}
+		$conditions['type'] = $product_description->type
+
+		$products = $this->Product->query()
+
+		$options = array('conditions' => $conditions);
+
+		$this->Product->find('all', $options);
+
+	}
+
+	private function attributes_search_no_equivalences($productSearch)
+	{
+		$query = attributes_search_no_equivalences_query($productSearch);
+		$values = attributes_search_no_equivalences_values($productSearch);
+		$db = $this->getDataSource();
+		return $db->fetchAll($query, $values);
+	}
+
+	
 
 /**
  * delete method

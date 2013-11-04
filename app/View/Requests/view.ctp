@@ -1,3 +1,5 @@
+<?php echo $this->Html->script('view-request'); ?>
+
 <div class="requests view">
 <h2><?php echo __('Request'); ?></h2>
 	<dl>
@@ -43,6 +45,29 @@
 		</dd>
 	</dl>
 </div>
+
+<!-- Búsqueda de proveedores mediante búsqueda de producto -->
+<fieldset>
+	<legend> Búsqueda </legend>
+	<label>Categoría:</label>
+		<?php echo $this->Form->select('Categoría', $categories, array('id' => 'categories')); ?>
+
+	<label>Tipo:</label>
+		<?php echo $this->Form->select('Tipo', $types, array('id' => 'productTypeId', 'onchange' => 'type_changed()')); ?>
+
+	<label> <?php echo __('Atributos del producto:') ?> </label>
+	<div id="atributos"> </div>
+	<input type="submit" value="Buscar" onClick="search()"/>
+</fieldset>
+
+
+
+
+
+
+
+
+
 <div class="actions dropdown">
 	<a class="dropdown-toggle" data-toggle="dropdown" href="#"> <?php echo __('Actions'); ?><b class="caret bottom-up"></b></a>
 		<ul class="dropdown-menu bottom-up pull-right">
