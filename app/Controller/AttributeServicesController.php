@@ -6,7 +6,7 @@ class AttributeServicesController extends AppController {
 	public function beforeFilter()
 	{
 		parent::beforeFilter();
-		$this->Auth->allow('attributes_for_type');
+		$this->Auth->allow('attributes_for_type_id');
 	}
 
 	public function attributes_for_type_id($id)

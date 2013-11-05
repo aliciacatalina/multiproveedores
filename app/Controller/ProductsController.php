@@ -55,11 +55,10 @@ public $components = array('Paginator');
 			}
 		}
 		
-		$categories = $this->Product->Category->find('list');
 		$types = $this->Product->Type->find('list');
 		$attributes = $this->Product->Attribute->find('list');
 		$suppliers = $this->Product->Supplier->find('list');
-		$this->set(compact('categories', 'types', 'attributes', 'suppliers'));
+		$this->set(compact('types', 'attributes', 'suppliers'));
 	}
 
 /**

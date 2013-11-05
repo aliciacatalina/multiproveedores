@@ -92,6 +92,7 @@ Configure::write('Dispatcher.filters', array(
 	'AssetDispatcher',
 	'CacheDispatcher'
 ));
+CakePlugin::load('AssetCompress', array('bootstrap' => true));
 
 /**
  * Configures default file logging options
@@ -107,3 +108,5 @@ CakeLog::config('error', array(
 	'types' => array('warning', 'error', 'critical', 'alert', 'emergency'),
 	'file' => 'error',
 ));
+
+?>
