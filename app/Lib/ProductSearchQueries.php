@@ -1,9 +1,9 @@
 <?php
-    class ProductSearchQueries {
+    class ProductSearchQueries
+    {
 		
 		public function attributes_search($productSearch)
 		{
-			//category_id
 			$not_empty_attributes = array();
 			foreach ($productSearch->attributes as $key => $value) {
 				if($value != '')
@@ -19,14 +19,48 @@
 			$query += 	"from categories_suppliers as c_s, products_suppliers as ps";
 			$query += 	"where ";
 			$query +=		"ps.supplier_id = c_s.supplier_id ";
-			
+
 			if($productSearch->category != '')
 			{
-				$query+=	"AND ";
-				$query +=	"c_s.category_id = ?";
+				$query +=	"AND ";
+				$query +=	"c_s.category_id = ? ";
 			}
-		
+
+			foreach ($not_empty_attributes as $key => $attribute)
+			{
+				$query += 	"AND ";
+				$query += 	"exists ( ";
+				$query += 			"select * from attributes_products ";
+				$query += 			"where ";
+				$query +=				"product_id = ? AND ";
+				$query +=				"attribute_id = ? AND ";
+				$query +=				"value = '?'";
+				$query +=	")";
+			}
+			$query += ") AS s_p ";
+			$query += "WHERE p.id = s_p.p_id";
+
+			$values = attributes_search_values($productSearch, $not_empty_attributes);
+
+			$db = $this->getDataSource();
+		 	return $db->fetchAll($query, $values);
 		}
+
+		public function attributes_search_values($productSearch, $not_empty_attributes)
+		{
+			$values = array();
+			if($productSearch->category != '')
+			{
+				array_push($values, $productSearch->category);
+			}
+			foreach ($productSearch->attributes as $key => $value)
+			{
+				array_push($key);
+				array_push($value);
+			}
+			return $values;
+		}
+
     //attributes_search_with_equivalences
     	public function attributes_search_with_equivalences_query($productSearch)
 		{
@@ -106,20 +140,6 @@
 			return sprintf(
 				"exists ( select * from attributes_products where product_id = p.id AND attribute_id = ? AND value = '?' )",
 				$attribute_id, $attribute_value);
-		}
-		
-		public function attributes_search_values($productSearch)
-		{
-			$values = array();
-			foreach ($productSearch->attributes as $key => $attribute)
-			{
-				array_push($attribute->id, $attribute->value);
-			}
-			if($productSearch->category != '')
-			{
-				array_push($values, $productSearch->category);
-			}
-			return $values;
 		}
 	}
 ?>
