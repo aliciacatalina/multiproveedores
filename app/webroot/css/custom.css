@@ -21,6 +21,7 @@ body {
 	margin-bottom: 15px;
 	padding-bottom: 15px;
 	border-bottom: 1px solid gray;
+	position: relative;
 }
 @media (max-width: 767px) .login {
     width: 70%;
@@ -39,9 +40,13 @@ body {
 	border-left:4px solid transparent;
 	content:""
 }
-
-table .actions {
-	float: none;
+.row.striped > div {
+	float: left;
+}
+.row.striped .inner-actions {
+	position: absolute;
+	top: 50%;
+	right: 0;
 }
 .flashMessage, .message {
 	padding:8px 35px 8px 14px;
@@ -54,4 +59,8 @@ table .actions {
 	border-radius:2px;
 	color:#e67e22;
 	font-size:16px}
+}
+/** Requests Styles **/
+.btn.btn-info.view {
+	float: right;
 }
