@@ -11,6 +11,7 @@ function fp_inputFor(prefix, attribute)
 	{
 		return $('<input>').attr({
 				id: prefix + name, 
+				name: name,
 				class: 'input'
 			});
 	}
@@ -18,6 +19,7 @@ function fp_inputFor(prefix, attribute)
 	{
 		return $('<input>').attr({
 				id: prefix + name,
+				name: name,
 				class: 'input'
 			}).datepicker();
 	}
@@ -32,7 +34,7 @@ function fp_construct_array_for_attribute_values(form_id)
 	for(i = 0; i < attributes.length; i++)
 	{
 		attribute = new Object();
-		attribute.name = attributes[i].id;
+		attribute.name = attributes[i].name;
 		attribute.value = attributes[i].value;
 		attributes_array.push(attribute);
 	}
