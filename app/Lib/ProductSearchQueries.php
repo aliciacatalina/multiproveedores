@@ -1,6 +1,32 @@
 <?php
     class ProductSearchQueries {
 		
+		public function attributes_search($productSearch)
+		{
+			//category_id
+			$not_empty_attributes = array();
+			foreach ($productSearch->attributes as $key => $value) {
+				if($value != '')
+				{
+					$not_empty_attributes[$key] = $value;
+				}
+			}
+
+			$query = "select p.id, p.manufacturer_id";
+			$query += "from products as p,";
+			$query += "(";
+			$query += 	"select ps.product_id AS p_id";
+			$query += 	"from categories_suppliers as c_s, products_suppliers as ps";
+			$query += 	"where ";
+			$query +=		"ps.supplier_id = c_s.supplier_id ";
+			
+			if($productSearch->category != '')
+			{
+				$query+=	"AND ";
+				$query +=	"c_s.category_id = ?";
+			}
+		
+		}
     //attributes_search_with_equivalences
     	public function attributes_search_with_equivalences_query($productSearch)
 		{

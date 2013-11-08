@@ -59,7 +59,7 @@
 
 	<label> <?php echo __('Atributos del producto:') ?> </label>
 	<div id="1-atributos"> </div>
-	<input type="submit" value="Buscar" onClick="search()"/>
+	<input type="submit" value="Buscar" onClick="search1()"/>
 </fieldset>
 
 <!-- 2: Búsqueda por tipo -->
@@ -70,7 +70,7 @@
 		<?php echo $this->Form->select('Categoría', $categories, array('id' => '2-category_id')); ?>
 	<label>Tipo:</label>
 		<?php echo $this->Form->select('Tipo', $types, array('id' => '2-product_type_id', 'onchange' => 'type_changed()')); ?>
-	<input type="submit" value="Buscar" onClick="search()"/>
+	<input type="submit" value="Buscar" onClick="search2()"/>
 </fieldset>
 
 
@@ -84,7 +84,7 @@
 		<?php echo $this->Form->checkbox('Equivalencias', array('id' => '3-equivalencies')); ?>
 	<label>Identificador:</label>
 		<?php echo $this->Form->select('Tipo', $types, array('id' => '3-manufacturer_id')) ?>
-	<input type="submit" value="Buscar" onClick="search()"/>
+	<input type="submit" value="Buscar" onClick="search3()"/>
 </fieldset>
 
 
