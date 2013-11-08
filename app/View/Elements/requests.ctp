@@ -14,7 +14,7 @@
 <!-- 		<h4><?php echo h($request['Request']['deleted']); ?>&nbsp;</h3>
 	<h4><?php echo h($request['Request']['note']); ?>&nbsp;</h3> -->
 	<div class="inner-actions">
-		<?php echo $this->Html->link(__('View'), array('action' => 'view', $request['Request']['id']), array('class'=>'btn btn-info view')); ?>
+		<?php echo $this->Html->link(__('Trabajar Solicitud'), array('action' => 'view', $request['Request']['id']), array('class'=>'btn btn-info view')); ?>
 	</div>
 </div>
 <?php endforeach; ?>
