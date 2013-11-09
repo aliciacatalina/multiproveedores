@@ -37,7 +37,7 @@ class AppController extends Controller {
         'Session',
         'Auth' => array(
             'loginRedirect' => array('controller' => 'requests', 'action' => 'myRequests'),
-            'logoutRedirect' => array('controller' => 'requests', 'action' => 'index')
+            'logoutRedirect' => array('controller' => 'users', 'action' => 'login')
         )
     );
 
@@ -48,7 +48,6 @@ class AppController extends Controller {
     ));
     
     public function beforeFilter() {
-        $this->Auth->allow('index', 'view');
         $this->set('options_for_form', $this->options_for_form);
     }
 }

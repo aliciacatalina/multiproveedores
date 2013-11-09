@@ -121,8 +121,6 @@ class Product extends AppModel {
                 ),
         );
 
-
-
 /**
  * belongsTo associations
  *
@@ -173,38 +171,45 @@ class Product extends AppModel {
                 )
         );
 
-
-
         public function search_by_attributes($search)
         {
                 $preparation = $this->search_by_attributes_preparation($search);
                 $db = $this->getDataSource();
+                //return $preparation['values'];
+                $result = $db->fetchAll($preparation['query'], $preparation['values']);
+                return $this->group_products_result($result);
+        }
+
+        public function search_suppliers_for_products($products)
+        {
+                $preparation = $this->search_equivalencies_preparation($search);
+                $db = $this->getDataSource();
+                // return $preparation['query'];
+                
+                $splited_products = $this->split_only_originals_from_with_equivalencies($products);
+                
+                $originals = $this->search_prdoucts_with_id_preparation($splited_products[0]);
+                $equivalencies = $this->search_equivalencies($splited_products[1]);
+                $merged_products = $this->merge_products($originals, $equivalencies);
+                return $merged_products;
+        }
+
+        public function search_products($products_ids)
+        {
+                $preparation = $this->search_prdoucts_with_id_preparation($products_ids);
+                $db = $this->getDataSource();
                 // return $preparation['query'];
                 $result = $db->fetchAll($preparation['query'], $preparation['values']);
-                $results = array();
-                $current_product_id = 0;
-                $aux = null;
-                // $line = $result[0][0];
-                // return array($line['data_type_id'], $line['name'], $line['value']);
-                for($i = 0; $i < count($result); $i++)
-                {
-                        $line = $result[$i][0];
-                        if($current_product_id == 0 || $current_product_id != $line['id'])
-                        {
-                                if($current_product_id != 0)
-                                {
-                                        array_push($results, $aux);
-                                }
-                                $current_product_id = $line['id'];
-                                $aux = new ProductResult($line['id'], $line['manufacturer_id']);
-                        }
-                        array_push($aux->attributes, array($line['data_type_id'], $line['name'], $line['value']));
-                }
-                if($aux != null)
-                {
-                        array_push($results, $aux);
-                }
-                return $results;
+                return $this->group_products_result($result);
+        }
+
+        public function search_equivalencies($products_ids)
+        {
+                $preparation = $this->search_equivalencies_preparation($products_ids);
+                $db = $this->getDataSource();
+                // return $preparation['query'];
+                $result = $db->fetchAll($preparation['query'], $preparation['values']);
+                return $this->group_products_result($result);
         }
 
         public function search_by_attributes_preparation($productSearch)
@@ -241,7 +246,7 @@ class Product extends AppModel {
                 $query .=         "( ";
                 $query .= "select * ";
                 $query .= "from attributes ";
-                $query .= $this->list_of_ids_place_holders($not_empty_attributes);;
+                $query .= $this->ids_place_holders('where attributes.id', count($not_empty_attributes));
                 $query .= ") as a ";
                 $query .= "inner join ";
                 $query .= "attributes_products as ap ";
@@ -278,7 +283,7 @@ class Product extends AppModel {
                 $query .=         "( ";
                 $query .= "select * ";
                 $query .= "from attributes ";
-                $query .= $this->list_of_ids_place_holders($not_empty_attributes);;
+                $query .= $this->ids_place_holders('where attributes.id', count($not_empty_attributes));
                 $query .= ") as a ";
                 $query .= "inner join ";
                 $query .= "attributes_products as ap ";
@@ -296,15 +301,129 @@ class Product extends AppModel {
                 return array('query' => $query, 'values' => $values);
         }
 
-        public function list_of_ids_place_holders($attributes)
+        public function search_prdoucts_with_id_preparation($ids)
         {
-                if (count($attributes) == 0) return '';
+                $query = "select p.id, p.manufacturer_id data_type_id, name, value ";
+                $query .= "from ";
+                $query .= "( ";
+                $query .= "select products.id, products.manufacturer_id ";
+                $query .= "from products ";
+                $query .= $this->ids_place_holders('where products.id', count($ids));
+                $query .= ") as p ";
+                $query .= "inner join ";
+                $query .= "attributes_products ";
+                $query .= "on attributes_products.product_id = p.id, ";
+                $query .= "attributes ";
+                $query .= "where ";
+                $query .= "attributes.id = attributes_products.attribute_id ";
+                $query .= "order by p.id, attribute_id";
 
-                $result = "where attributes.id in ( ?";
-                for($i = 0; $i < count($attributes)-1; $i++)
+                return array('query' => $query, 'values' => $ids);
+        }
+
+         public function search_equivalencies_preparation($products_ids, $excluding)
+        {
+                $query = "select p.id, p.manufacturer_id, data_type_id, name, value ";
+                $query .= "from ";
+                $query .= "( ";
+                $query .= "select equivalent_id as e_id ";
+                $query .= "from equivalencies ";
+                $query .= $this->ids_place_holders('where equivalencies.original_id', count($products_ids));
+                $query .= ")as equivalencies ";
+                $query .= "inner join ";
+                $query .= "attributes_products ";
+                $query .= "on attributes_products.product_id = equivalencies.e_id, ";
+                $query .= "attributes, ";
+                $query .= "products as p ";
+                $query .= "where ";
+                $query .= "attributes.id = attributes_products.attribute_id AND ";
+                $query .= "p.id = equivalencies.e_id ";
+                $query .= $this->exclude($excluding);
+                $query .= "order by product_id, attribute_id ";
+
+                return array('query' => $query, 'values' => array_merge($products_ids, $excluding));
+        }
+
+        public function search_suppliers_that_supply($products_ids)
+        {
+
+        }
+
+//              -----------AUXILIARES-----------------
+        public function merge_products($originals, $equivalencies)
+        {
+                $result = array();
+                $o_i = 0;
+                $e_i = 0;
+                while($o_i < count($originals) && $e_i < count($equivalencies))
+                {
+
+                        $o_id = $originals[$o_i]['id'];
+                        $e_id = $equivalencies[$e_i]['id'];
+                        if($o_id < $e_id)
+                        {
+                                array_push($result, $originals[$o_i]);
+                                $o_i++;
+                        }else
+                        {
+                                array_push($result, $equivalencies[$e_i]);
+                                $e_i++;
+                        }
+                }
+                if( $o_i < count($originals) )
+                {
+                        while($o_i < count($originals))
+                        {
+                                array_push($result, $originals[$o_i]);
+                                $o_i++;
+                        }
+                }else
+                {
+                       while($e_i < count($equivalencies))
+                        {
+                                array_push($result, $equivalencies[$e_i]);
+                                $e_i++;
+                        } 
+                }
+                return $result;
+        }
+
+        public function exclude($excluding)
+        {
+                if(count($excluding) == 0) return '';
+                $result = "AND p.id not in (? ";
+                for($i = 0; $i < count($excluding) - 1; $i++)
                 {
                         $result .= ", ?";
+                } 
+                $result .= ") ";
+                return $result;
+        }
+
+        public function split_only_originals_from_with_equivalencies($products_equivalencies)
+        {
+                $only_originals = array();
+                $with_equivalencies = array();
+
+                foreach ($products_equivalencies as $key => $value) {
+                        if($value[1])
+                        {
+                                array_push($with_equivalencies, $value[0]);
+                        }else{
+                                array_push($only_originals, $value[0]);
+                        }
                 }
+                return array($only_originals, $with_equivalencies);
+        }
+
+        public function ids_place_holders($condition, $how_many)
+        {
+                if($how_many == 0) return 0;
+                $result = $condition . " in ( ?";
+                for($i = 0; $i < $how_many - 1; $i++)
+                {
+                        $result .= ", ?";
+                } 
                 $result .= ") ";
                 return $result;
         }
@@ -319,6 +438,34 @@ class Product extends AppModel {
                         $result .= " OR ap.value = ?";
                 }
                 return $result;
+        }
+
+        public function group_products_result($result)
+        {
+                $results = array();
+                $current_product_id = 0;
+                $aux = null;
+                // $line = $result[0][0];
+                // return array($line['data_type_id'], $line['name'], $line['value']);
+                for($i = 0; $i < count($result); $i++)
+                {
+                        $line = $result[$i][0];
+                        if($current_product_id == 0 || $current_product_id != $line['id'])
+                        {
+                                if($current_product_id != 0)
+                                {
+                                        array_push($results, $aux);
+                                }
+                                $current_product_id = $line['id'];
+                                $aux = new ProductResult($line['id'], $line['manufacturer_id']);
+                        }
+                        array_push($aux->attributes, array($line['data_type_id'], $line['name'], $line['value']));
+                }
+                if($aux != null)
+                {
+                        array_push($results, $aux);
+                }
+                return $results;
         }
 
         public function attributes_search_values($category, $type, $not_empty_attributes)

@@ -173,4 +173,22 @@ class Order extends AppModel {
 			'order' => ''
 		)
 	);
+
+	public function currencyConversion($from, $to, $amount){                    
+        $from = urlencode($from);
+        $to = urlencode($to);
+        $amount = urlencode($amount);
+       
+        //Yahoo api
+        $yql_base_url = "http://query.yahooapis.com/v1/public/yql";  
+        $yql_query = "select * from csv where url='http://download.finance.yahoo.com/d/quotes.csv?e=.csv&f=c4l1&s=".$to.$from."=X' and columns='symbol,price'";
+        $yql_query_url = $yql_base_url . "?q=" . urlencode($yql_query);  
+        $yql_query_url .= "&format=json";  
+        $session = curl_init($yql_query_url);          
+        curl_setopt($session, CURLOPT_RETURNTRANSFER,true);      
+        $json = curl_exec($session);  
+        $currencyObj =  json_decode($json);
+
+        return $amount * $currencyObj->query->results->row->price;
+    } 
 }
