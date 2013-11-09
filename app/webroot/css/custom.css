@@ -77,7 +77,8 @@ h4 {
 }
 /** Filters **/
 .filters {
-	padding-bottom: 15px;
+	padding-top: 15px;
+  padding-bottom: 15px;
 	border-bottom: 1px solid #ddd;
 }
 .filters > ul.pagination.pagination-inverse {

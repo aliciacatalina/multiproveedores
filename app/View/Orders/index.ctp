@@ -1,7 +1,8 @@
+<h1>Ordenes por Cerrar</h3>
 <div class="filters">
 <span>Ordenar por:</span>
 <ul class="pagination pagination-inverse">
-	<li><?php echo $this->Paginator->sort('created'); ?></li>
+	<li><?php echo $this->Paginator->sort('created', 'Fecha'); ?></li>
 </ul>
 </div>
 <?php foreach ($orders as $order): ?>
