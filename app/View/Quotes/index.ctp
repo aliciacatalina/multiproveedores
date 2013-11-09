@@ -18,16 +18,16 @@
 				<?php echo $this->Html->link($quote['Request']['note'], array('controller' => 'requests', 'action' => 'view', $quote['Request']['id'])); ?>
 			</h4>
 			<h4>
-				<?php echo $this->Html->link($quote['Supplier']['corporate_name'], array('controller' => 'suppliers', 'action' => 'view', $quote['Supplier']['id'])); ?>
+				Proveedor: <?php echo $this->Html->link($quote['Supplier']['corporate_name'], array('controller' => 'suppliers', 'action' => 'view', $quote['Supplier']['id'])); ?>
 			</h4>
 			<h4>
-				<?php echo $this->Html->link($quote['User']['name'], array('controller' => 'users', 'action' => 'view', $quote['User']['id'])); ?>
+				Creada por: <?php echo $this->Html->link($quote['User']['name'], array('controller' => 'users', 'action' => 'view', $quote['User']['id'])); ?>
 			</h4>
 			<h4>
-				<?php echo $this->Html->link($quote['Result']['value'], array('controller' => 'results', 'action' => 'view', $quote['Result']['id'])); ?>
+				Estaus: <?php echo $this->Html->link($quote['Result']['value'], array('controller' => 'results', 'action' => 'view', $quote['Result']['id'])); ?>
 			</h4>
 			<h4>
-				<?php echo $this->Html->link($quote['Product']['id'], array('controller' => 'products', 'action' => 'view', $quote['Product']['id'])); ?>
+				Id Producto: <?php echo $this->Html->link($quote['Product']['id'], array('controller' => 'products', 'action' => 'view', $quote['Product']['id'])); ?>
 			</h4>
 			<h4><?php echo date('j M Y', strtotime(h($quote['Quote']['created']))); ?>&nbsp;</h4>
 			<h4><?php echo date('j M Y', strtotime(h($quote['Quote']['modified']))); ?>&nbsp;</h4>

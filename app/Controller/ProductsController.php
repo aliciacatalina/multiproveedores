@@ -123,15 +123,15 @@ public function edit($id = null) {
  */
 public function products_search_by_attributes()
 {        
-        $this->autoRender = dos;
+        $this->autoRender = false;
 
         $product_description = $this->request->data;
 
         $productSearch = new ProductSearch(
-                        $product_description[0],
-                        $product_description[1],
-                        $product_description[2]
-                );
+                                $product_description[0],
+                                $product_description[1],
+                                $product_description[2]
+                        );
 
         $result = $this->Product->search_by_attributes($productSearch);
         echo json_encode($result);
