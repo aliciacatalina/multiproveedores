@@ -3,7 +3,7 @@
 **/
 .grey-container{
 	width:750px;
-  border:1px solid #e1e1e8;
+  border:1px solid #ddd;
   padding:30px;
   -moz-border-radius:4px;
   -webkit-border-radius:4px;
@@ -41,10 +41,14 @@ h4 {
   margin: 30px auto;
 }
 .row.striped {
-	margin-bottom: 15px;
-	padding-bottom: 15px;
-	border-bottom: 1px solid gray;
+	padding: 10px;
+	border-bottom: 1px solid #ddd;
 	position: relative;
+}
+.row.slim [class*="col-"]{
+  padding: 3px;
+  padding-right: 5px;
+  padding-left: 5px;
 }
 @media (max-width: 767px) .login {
     width: 70%;
@@ -74,7 +78,7 @@ h4 {
 /** Filters **/
 .filters {
 	padding-bottom: 15px;
-	border-bottom: 1px solid gray;
+	border-bottom: 1px solid #ddd;
 }
 .filters > ul.pagination.pagination-inverse {
 	display: inline;

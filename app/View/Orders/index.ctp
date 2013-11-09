@@ -1,3 +1,79 @@
+<div class="filters">
+<span>Ordenar por:</span>
+<ul class="pagination pagination-inverse">
+	<li><?php echo $this->Paginator->sort('created'); ?></li>
+</ul>
+</div>
+<?php foreach ($orders as $order): ?>
+<div class="row striped slim">
+	<!-- INFO -->
+	<div class="col-8">
+		<div class="row">
+			<div class="col-12">
+	      Orden #<?php echo h($order['Order']['id']); ?>
+	    </div>
+		</div>
+	 	<div class="row">
+	    <div class="col-9 text-right light">
+	      Fecha de creación
+	    </div>
+	    <div class="col-3 bold">
+	      <?php echo $this->Time->format($order['Order']['created'], '%d/%m/%y', 'invalid'); ?>
+	    </div>
+	  </div>
+
+	  <!-- Proveedor -->
+	  <div class="row">
+	    <div class="col-3 text-right light">
+	      Proveedor
+	    </div>
+	    <div class="col-9">
+	      <?php echo $this->Html->link($order['Quote']['Supplier']['corporate_name'], array('controller' => 'suppliers', 'action' => 'view', $order['Quote']['Supplier']['id'])); ?>
+	    </div>
+	  </div>
+
+	  <!-- Producto -->
+	  <div class="row">
+	    <div class="col-3 text-right light">
+	      Producto
+	    </div>
+	    <div class="col-3">
+	      <?php echo $this->Html->link($order['Quote']['product_id'], array('controller' => 'products', 'action' => 'view', $order['Quote']['product_id'])); ?>
+	    </div>
+
+	    <div class="col-3 text-right light">
+	      Precio Unitario
+	    </div>
+	    <div class="col-3">
+	      <?php echo "$".h($order['Order']['unitary_price']); ?>
+	    </div>
+	  </div>
+
+	  <div class="row">
+	    <div class="col-3 text-right light">
+	      Cantidad
+	    </div>
+	    <div class="col-3">
+	      <?php echo h($order['Order']['quantity']); ?>
+	    </div>
+
+	    <div class="col-3 text-right light">
+	      Precio Total
+	    </div>
+	    <div class="col-3">
+	      <?php echo "$".h($order['Order']['total_price']); ?>
+	    </div>
+	  </div>
+		
+	</div>
+
+	<!-- Acctions -->
+	<div class="col-4">
+		
+	</div>
+</div>
+<?php endforeach; ?>
+
 <div class="orders index">
 	<h2><?php echo __('Orders'); ?></h2>
 	<div class="actions dropdown">

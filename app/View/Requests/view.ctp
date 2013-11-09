@@ -1,5 +1,7 @@
 <?php echo $this->AssetCompress->script('requests-view'); ?>
 
+<?php print_r($request) ?>
+
 <div class="grey-container" >
   <h2>Solicitud #<?php echo $request['Request']['id']; ?></h2>
   
