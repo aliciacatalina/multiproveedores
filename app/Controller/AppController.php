@@ -41,7 +41,14 @@ class AppController extends Controller {
         )
     );
 
+    var $options_for_form = array(
+    'inputDefaults' => array(
+        'label' => false,
+        'div' => "form-fields"
+    ));
+    
     public function beforeFilter() {
         $this->Auth->allow('index', 'view');
+        $this->set('options_for_form', $this->options_for_form);
     }
 }

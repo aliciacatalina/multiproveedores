@@ -21,8 +21,9 @@ class OrdersController extends AppController {
  * @return void
  */
 	public function index() {
-		$this->Order->recursive = 0;
-		$this->set('orders', $this->Paginator->paginate());
+		$this->Order->recursive = 0;		
+		$orders = $this->Paginator->paginate(array('Order.deleted' => 0));
+		$this->set('orders', $orders);
 	}
 
 /**
@@ -109,3 +110,5 @@ class OrdersController extends AppController {
 		}
 		return $this->redirect(array('action' => 'index'));
 	}}
+
+

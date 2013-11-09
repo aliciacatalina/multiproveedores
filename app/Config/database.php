@@ -7,8 +7,8 @@ class DATABASE_CONFIG {
 		'host' => 'localhost',
 		'port' => 5432,
 		'login' => 'postgres',
-		'password' => 'admin',
-		'database' => 'multiproveedores',
+		'password' => 'pg123',
+		'database' => 'postgres',
 
 
 
