@@ -10,8 +10,9 @@ App::uses('CategoriesController', 'Controller');
 */
 class RequestsController extends AppController {
 
-	public $components = array('Paginator');
+	public $components = array('Paginator', 'RequestHandler');
 	public $uses = array('Request', 'Type', 'Category');
+
 
 	/**
 	 * funcion index (Metodo de usuario)
@@ -224,5 +225,63 @@ class RequestsController extends AppController {
 			$this->Session->setFlash(__('The request could not be released. Please, try again.'));
 		}
 		return $this->redirect(array('action' => 'myRequests'));
+	}
+
+	/**
+	 * duplicate method
+	 *
+	 * @throws NotFoundException
+	 * @param string $id
+	 * @return void
+	 */
+	public function duplicate($id = null) {
+		$this->Request->id = $id;
+		if (!$this->Request->exists()) {
+			throw new NotFoundException(__('Invalid request'));
+		}	
+		//Crear una solicitud nueva
+		$this->Request->create();
+		//Obtener los datos de la solicitud a duplicar
+		$request = $this->Request->find('first', array('conditions' => array('Request.id' => $id)));
+		//Quitar el id para evitar que haga update
+		$request["Request"]["id"]="";	
+		print_r($request);		
+		if ($this->Request->save($request)) {
+			$this->Session->setFlash(__('The request has been duplicated.'));
+		} else {
+			$this->Session->setFlash(__('The request could not be duplicated. Please, try again.'));
+		}
+		return $this->redirect(array('action' => 'view/'.$id));
+	}
+
+	/**
+	 * updateQuantity method
+	 *
+	 * @throws NotFoundException
+	 * @param string $id
+	 * @return void
+	 */
+	public function updateQuantity() {		
+
+		$this->autoRender = false;
+
+		$datos=array();
+		$datos= $this->request->data;		
+		$idRequest = $datos[0];
+		$cantidad = $datos[1];
+		$this->Request->id = $idRequest;
+		if (!$this->Request->exists()) {
+			echo json_encode(0);
+		}	
+		//Crear una solicitud nueva
+		$this->Request->create();
+		//Obtener los datos de la solicitud a duplicar
+		$request = $this->Request->find('first', array('conditions' => array('Request.id' => $idRequest)));
+		$request["Request"]["quantity"] = $cantidad;		
+		if ($this->Request->save($request)) {
+			echo json_encode(1);
+		} else {
+			echo json_encode(0);
+		}		
 	}
 }

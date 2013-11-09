@@ -1,5 +1,5 @@
 <?php echo $this->AssetCompress->script('requests-view'); ?>
-
+<?php echo $this->Html->script('requests-updateQty'); ?>
 <div class="requests view">
 <h2><?php echo __('Request'); ?></h2>
 	<dl>
@@ -43,62 +43,61 @@
 			<?php echo h($request['Request']['note']); ?>
 			&nbsp;
 		</dd>
+		<dt>Quantity</dt>
+		<dd>			
+			<?php echo $this->Form->input('Request.quantity', array('onchange'=>'updateQty(this,'.$request['Request']['id'].')'));?>
+				&nbsp;		
+		</dd>
+		<dt>&nbsp;</dt>
+		<dd>
+			<?php echo $this->Html->link("Duplicar solicitud +", array('controller' => 'requests', 'action' => 'duplicate', $request['Request']['id'])); ?>
+			
+			&nbsp;
+		</dd>
 	</dl>
 </div>
 
 <!-- Búsqueda de proveedores mediante búsqueda de producto -->
 
-<ul class="nav nav-tabs" id="search-tabs">
-	<li class="active"><a href="#attributes">Busqueda por Atributos</a></li>
-	<li><a href="#type">Busqueda por Tipo</a></li>
-	<li><a href="#id">Busqueda por Identificador</a></li>
-</ul>
-
-<div class="tab-content">
 <!-- 1: Búsqued por atributo -->
-	<div class="tab-pane active" id="attributes">
+<fieldset>
+	<legend> Búsqueda Por Atributos </legend>
 
-			<label>Categoría:</label>
-				<?php echo $this->Form->select('Categoría', $categories, array('id' => '1-category_id')); ?>
-			<label>Tipo:</label>
-				<?php echo $this->Form->select('Tipo', $types, array('id' => '1-product_type_id', 'onchange' => 'type_changed1()')); ?>
+	<label>Categoría:</label>
+		<?php echo $this->Form->select('Categoría', $categories, array('id' => '1-category_id')); ?>
+	<label>Tipo:</label>
+		<?php echo $this->Form->select('Tipo', $types, array('id' => '1-product_type_id', 'onchange' => 'type_changed1()')); ?>
 
-			<label> <?php echo __('Atributos del producto:') ?> </label>
-			<div id="1-atributos"> </div>
-			<input type="submit" value="Buscar" onClick="search1()"/>
+	<label> <?php echo __('Atributos del producto:') ?> </label>
+	<div id="1-atributos"> </div>
+	<input type="submit" value="Buscar" onClick="search1()"/>
+</fieldset>
 
-	</div>
 <!-- 2: Búsqueda por tipo -->
-	<div class="tab-pane" id="type">
+<fieldset>
+	<legend> Búsqueda Por Tipo </legend>
 
-			<label>Categoría:</label>
-				<?php echo $this->Form->select('Categoría', $categories, array('id' => '2-category_id')); ?>
-			<label>Tipo:</label>
-				<?php echo $this->Form->select('Tipo', $types, array('id' => '2-product_type_id', 'onchange' => 'type_changed()')); ?>
-			<input type="submit" value="Buscar" onClick="search2()"/>
+	<label>Categoría:</label>
+		<?php echo $this->Form->select('Categoría', $categories, array('id' => '2-category_id')); ?>
+	<label>Tipo:</label>
+		<?php echo $this->Form->select('Tipo', $types, array('id' => '2-product_type_id', 'onchange' => 'type_changed()')); ?>
+	<input type="submit" value="Buscar" onClick="search2()"/>
+</fieldset>
 
-	</div>
 
+<!-- 3: Búsqueda por manufacturer_id -->
+<fieldset>
+	<legend> Búsqueda Por Identificador </legend>
 
-	<!-- 3: Búsqueda por manufacturer_id -->
-	<div class="tab-pane" id="id">
+	<label>Categoría:</label>
+		<?php echo $this->Form->select('Categoría', $categories, array('id' => '3-category_id')); ?>
+	<label>Equivalencias:</label>
+		<?php echo $this->Form->checkbox('Equivalencias', array('id' => '3-equivalencies')); ?>
+	<label>Identificador:</label>
+		<?php echo $this->Form->select('Tipo', $types, array('id' => '3-manufacturer_id')) ?>
+	<input type="submit" value="Buscar" onClick="search3()"/>
+</fieldset>
 
-			<label>Categoría:</label>
-				<?php echo $this->Form->select('Categoría', $categories, array('id' => '3-category_id')); ?>
-			<label>Equivalencias:</label>
-				<?php echo $this->Form->checkbox('Equivalencias', array('id' => '3-equivalencies')); ?>
-			<label>Identificador:</label>
-				<?php echo $this->Form->select('Tipo', $types, array('id' => '3-manufacturer_id')) ?>
-			<input type="submit" value="Buscar" onClick="search3()"/>
-
-	</div>
-	<script>
-		$('#search-tabs a').click(function (e) {
-		  e.preventDefault();
-		  $(this).tab('show');
-		})
-	</script>
-</div>
 
 
 
