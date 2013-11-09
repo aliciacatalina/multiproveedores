@@ -2,12 +2,13 @@
 ** Custom Styles
 **/
 .grey-container{
-	width:700px;
+	width:750px;
   border:1px solid #e1e1e8;
   padding:30px;
   -moz-border-radius:4px;
   -webkit-border-radius:4px;
   border-radius:4px;
+  margin-bottom: 20px;
 }
 
 .inner-960 {
