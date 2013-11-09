@@ -40,10 +40,9 @@
 			$query += ") AS s_p ";
 			$query += "WHERE p.id = s_p.p_id";
 
-			$values = attributes_search_values($productSearch, $not_empty_attributes);
+			$values = $this->attributes_search_values($productSearch, $not_empty_attributes);
 
-			$db = $this->getDataSource();
-		 	return $db->fetchAll($query, $values);
+			return array('query' => $query, 'values' => $values);
 		}
 
 		public function attributes_search_values($productSearch, $not_empty_attributes)
@@ -55,8 +54,8 @@
 			}
 			foreach ($productSearch->attributes as $key => $value)
 			{
-				array_push($key);
-				array_push($value);
+				array_push($values, $key);
+				array_push($values, $value);
 			}
 			return $values;
 		}

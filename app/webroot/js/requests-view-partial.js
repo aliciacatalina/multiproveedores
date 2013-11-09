@@ -7,16 +7,17 @@ function type_changed1()
 
 function search1()
 {
-	search = new Array();
-	search['category']		= $('#1-category_id').val();
-	search['attributes'] 	= fp_construct_array_for_attribute_values('1-atributos');
+	var search = new Array();
+	var category = $('#1-category_id').val();
+	var attributes = fp_construct_array_for_attribute_values('1-atributos');
+	
+	search[0] = category;
+	search[1] = attributes;
 
-alert ($('#1-category_id').val());
 	alert(JSON.stringify(search));
-
 	$.ajax({
-		url: 'http://localhost:8080/multiproveedores/Products/products_search_by_attributes/',
-		type: 'GET',
+		url: 'http://localhost:8080/multiproveedores/Products/products_search_by_attributes',
+		type: 'POST',
 		contentType: 'application/json',
 		async: false,
 		data: JSON.stringify(search),
