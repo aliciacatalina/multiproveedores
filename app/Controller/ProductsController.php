@@ -123,7 +123,7 @@ public function edit($id = null) {
  */
 public function products_search_by_attributes()
 {        
-        $this->autoRender = false;
+        $this->autoRender = uno;
 
         $product_description = $this->request->data;
 
