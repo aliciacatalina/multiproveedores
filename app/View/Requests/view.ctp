@@ -63,13 +63,12 @@
 <ul class="nav nav-tabs" id="search-tabs">
 	<li class="active"><a href="#attributes">Busqueda por Atributos</a></li>
 	<li><a href="#type">Busqueda por Tipo</a></li>
-   	<li><a href="#id">Busqueda por Identificador</a></li>
 </ul>
  
  <!-- Tabs for advanced search -->
 <div class="tab-content">
     <div class="tab-pane active" id="attributes">
-<!-- 1: Búsqued por atributo -->
+<!-- 1: Búsqueda por atributo -->
 
 	<label>Categoría:</label>
 		<?php echo $this->Form->select('Categoría', $categories, array('id' => '1-category_id')); ?>
@@ -99,11 +98,3 @@
      })
    </script>
 
-
-<div class="actions dropdown">
-	<a class="dropdown-toggle" data-toggle="dropdown" href="#"><b class="caret bottom-up"></b></a>
-		<ul class="dropdown-menu bottom-up pull-right">
-			<li><?php echo $this->Html->link(__('New Quote'), array('controller' => 'quotes', 'action' => 'add')); ?> </li>
-		</ul>
-	</div>
-</div>
