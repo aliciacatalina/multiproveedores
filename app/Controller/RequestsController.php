@@ -22,7 +22,7 @@ class RequestsController extends AppController {
 	 */
 	public function index() {
 		$this->Request->recursive = 0;
-			//Solo mostrara las solicitudes que sean
+		//Solo mostrara las solicitudes que sean
 		$requests = $this->Paginator->paginate(array('user_id' => null, 'deleted' => 0));
 		$this->set('requests', $requests);
 	}
@@ -75,16 +75,18 @@ class RequestsController extends AppController {
 		}
 
 		//Datos que se regresaran a la vista
-		//Request
-		//$options = array('conditions' => array('Request.' . $this->Request->primaryKey => $id));
-		$this->set('request', $request);
+		$request['Content']['xml'] = json_decode(json_encode((array) simplexml_load_string($request['Content']['xml'])),1);
+		
 		//Types
 		$typesController = new TypesController();
 		$this->set('types', $typesController->types_for_selector());
+
 		//Categories
 		$categoriesController = new CategoriesController();
 		$this->set('categories', $categoriesController->categories_for_selector());
 
+		//Request
+		$this->set('request', $request);
 	}
 
 	/**
