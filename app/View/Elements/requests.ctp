@@ -1,14 +1,8 @@
 <div class="filters">
 <span>Ordenar por:</span>
 <ul class="pagination pagination-inverse">
-	<li><?php echo $this->Paginator->sort('id'); ?></li>
 	<li><?php echo $this->Paginator->sort('category_id'); ?></li>
-	<li><?php echo $this->Paginator->sort('content_id'); ?></li>
-	<li><?php echo $this->Paginator->sort('user_id'); ?></li>
 	<li><?php echo $this->Paginator->sort('created'); ?></li>
-	<li><?php echo $this->Paginator->sort('modified'); ?></li>
-	<li><?php echo $this->Paginator->sort('deleted'); ?></li>
-	<li><?php echo $this->Paginator->sort('note'); ?></li>
 </ul>
 </div>
 <?php foreach ($requests as $request): ?>

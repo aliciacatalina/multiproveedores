@@ -38,6 +38,7 @@
 		echo $this->Html->script('jquery');
 		echo $this->Html->script('jquery-ui');
 		echo $this->Html->script('furatto');
+		echo $this->Html->script('bootstrap-tab');
 		
 
 
