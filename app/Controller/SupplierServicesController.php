@@ -10,22 +10,23 @@ class SupplierServicesController extends AppController {
 		$this->Auth->allow('newOnlineRequest');
 	}
 
-		/**
+                /**
  * newOnlineRequest method
  *
  * @return void
  */
-	public function search_by_product_type()
-	{	
-		$this->autoRender = false;
+    public function search_by_product_type()
+    {        
+    	$this->autoRender = false;
 
-		$product_description = $this->request->data;
+    	$product_description = $this->request->data;
 
-		$category = $this->request->data[0];
-		$product_type = $this->request->data[1];
+    	$category = $this->request->data[0];
+    	$product_type = $this->request->data[1];
 
-		$result = $this->Supplier->search_by_product_type($category, $product_type);
-		echo json_encode($result);
-	}
+    	$result = $this->Supplier->search_by_product_type($category, $product_type);
+    	echo json_encode($result);
+    }
 
 }
+?>
