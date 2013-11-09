@@ -1,62 +1,74 @@
 <?php echo $this->AssetCompress->script('requests-view'); ?>
 
-<div class="requests view">
-<h2><?php echo __('Request'); ?></h2>
-	<dl>
-		<dt><?php echo __('Id1'); ?></dt>
-		<dd>
-			<?php echo h($request['Request']['id']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Category'); ?></dt>
-		<dd>
-			<?php echo $this->Html->link($request['Category']['url'], array('controller' => 'categories', 'action' => 'view', $request['Category']['id'])); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Content'); ?></dt>
-		<dd>
-			<?php echo $this->Html->link($request['Content']['comment'], array('controller' => 'contents', 'action' => 'view', $request['Content']['id'])); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('User'); ?></dt>
-		<dd>
-			<?php echo $this->Html->link($request['User']['name'], array('controller' => 'users', 'action' => 'view', $request['User']['id'])); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Created'); ?></dt>
-		<dd>
-			<?php echo h($request['Request']['created']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Modified'); ?></dt>
-		<dd>
-			<?php echo h($request['Request']['modified']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Deleted'); ?></dt>
-		<dd>
-			<?php echo h($request['Request']['deleted']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Note'); ?></dt>
-		<dd>
-			<?php echo h($request['Request']['note']); ?>
-			&nbsp;
-		</dd>
-	</dl>
+<div class="grey-container" >
+  <h2>Solicitud #<?php echo $request['Request']['id']; ?></h2>
+  
+  <!-- Categoria -->
+  <div class="row">
+    <div class="col-3 text-right">
+      Categoría
+    </div>
+    <div class="col-9">
+      <?php echo $this->Html->link($request['Category']['url'], array('controller' => 'categories', 'action' => 'view', $request['Category']['id'])); ?>
+    </div>
+  </div>
+
+  <!-- Comentario -->
+  <div class="row">
+    <div class="col-3 text-right">
+      Comentario
+    </div>
+    <div class="col-9">
+      <?php echo $request['Content']['comment']; ?>
+    </div>
+  </div>
+
+  <!-- Fecha -->
+  <div class="row">
+    <div class="col-3 text-right">
+      Fecha de creación
+    </div>
+    <div class="col-9">
+      <?php echo $this->Time->format($request['Request']['created'], '%d/%m/%y', 'invalid'); ?>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-3 text-right">
+      Fecha de modificación
+    </div>
+    <div class="col-9">
+      <?php echo $this->Time->format($request['Request']['modified'], '%d/%m/%y', 'invalid'); ?>
+    </div>
+  </div>
+
+  <!-- Fecha -->
+  <div class="row">
+    <div class="col-3 text-right">
+      Notas
+    </div>
+    <div class="col-9">
+      <?php echo h($request['Request']['note']); ?>
+    </div>
+  </div>
+
+  <div class="text-right">
+    <?php echo $this->Html->link(__('Edit'), array('controller' => 'requests', 'action' => 'edit', $request['Request']['id']), array('class' => "btn btn-info btn-highlight")); ?>
+    <?php echo $this->Html->link(__('Delete'), array('controller' => 'requests', 'action' => 'delete', $request['Request']['id']), array('class' => "btn btn-danger btn-highlight"), __('Are you sure you want to delete # %s?', $request['Request']['id'])); ?>
+  </div>
+
 </div>
 
 <!-- Búsqueda de proveedores mediante búsqueda de producto -->
 <ul class="nav nav-tabs" id="search-tabs">
 	<li class="active"><a href="#attributes">Busqueda por Atributos</a></li>
 	<li><a href="#type">Busqueda por Tipo</a></li>
-   	<li><a href="#id">Busqueda por Identificador</a></li>
 </ul>
  
  <!-- Tabs for advanced search -->
 <div class="tab-content">
     <div class="tab-pane active" id="attributes">
-<!-- 1: Búsqued por atributo -->
+<!-- 1: Búsqueda por atributo -->
 
 	<label>Categoría:</label>
 		<?php echo $this->Form->select('Categoría', $categories, array('id' => '1-category_id')); ?>
@@ -79,14 +91,6 @@
  
   </div>
 
-<!-- 3: Búsqueda por manufacturer_id -->
-<div class="tab-pane" id="id">
-    <label>Categoría:</label>
-     <?php echo $this->Form->select('Categoría', $categories, array('id' => '2-category_id')); ?>
-   <label>Tipo:</label>
-     <?php echo $this->Form->select('Tipo', $types, array('id' => '2-product_type_id', 'onchange' => 'type_changed()')); ?>
-   <input type="submit" value="Buscar" onClick="search2()" class="btn"/>
-</div>
   <script>
      $('#search-tabs a').click(function (e) {
        e.preventDefault();
@@ -94,11 +98,3 @@
      })
    </script>
 
-
-<div class="actions dropdown">
-	<a class="dropdown-toggle" data-toggle="dropdown" href="#"><b class="caret bottom-up"></b></a>
-		<ul class="dropdown-menu bottom-up pull-right">
-			<li><?php echo $this->Html->link(__('New Quote'), array('controller' => 'quotes', 'action' => 'add')); ?> </li>
-		</ul>
-	</div>
-</div>

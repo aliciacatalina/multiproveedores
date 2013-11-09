@@ -13,9 +13,6 @@
 	<h4>
 		Comentarios: <?php echo $this->Html->link($request['Content']['comment'], array('controller' => 'contents', 'action' => 'view', $request['Content']['id'])); ?>
 	</h4>
-	<h4>
-		Creada por: <?php echo $this->Html->link($request['User']['name'], array('controller' => 'users', 'action' => 'view', $request['User']['id'])); ?>
-	</h4>
 	<h4>Fecha Creación: <?php echo date('j M Y', strtotime(h($request['Request']['created']))); ?>&nbsp;</h4>
 	<h4>Fecha Modificación: <?php echo date('j M Y', strtotime(h($request['Request']['modified']))); ?>&nbsp;</h4>
 <!-- 		<h4><?php echo h($request['Request']['deleted']); ?>&nbsp;</h3>
