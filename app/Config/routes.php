@@ -39,6 +39,7 @@
  */
 	Router::mapResources('request_services');
 	Router::mapResources('attribute_services');
+	Router::mapResources('products');
 	Router::parseExtensions();
 	CakePlugin::routes();
 
