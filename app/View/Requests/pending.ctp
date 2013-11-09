@@ -1,6 +1,6 @@
 <div class="requests index">
-	<h2><?php echo __('Requests'); ?></h2>
-	<div class="actions dropdown">
+	<h2><?php echo __('Solicitudes'); ?></h2>
+<!-- 	<div class="actions dropdown">
 	<a class="dropdown-toggle" data-toggle="dropdown" href="#"> <?php echo __('Actions'); ?><b class="caret bottom-up"></b></a>
 		<ul class="dropdown-menu bottom-up pull-right">
 
@@ -24,7 +24,7 @@
 			<li><?php echo $this->Html->link(__('List Quotes'), array('controller' => 'quotes', 'action' => 'index')); ?> </li>
 			<li><?php echo $this->Html->link(__('New Quote'), array('controller' => 'quotes', 'action' => 'add')); ?> </li>
 	</ul>
-</div>
+</div> -->
 	<table class="table table-striped">
 	<tr>
 			<th><?php echo $this->Paginator->sort('id'); ?></th>

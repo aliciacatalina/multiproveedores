@@ -4,19 +4,12 @@
 	<a class="dropdown-toggle" data-toggle="dropdown" href="#"> <?php echo __('Actions'); ?><b class="caret bottom-up"></b></a>
 		<ul class="dropdown-menu bottom-up pull-right">
 			<li><?php echo $this->Html->link(__('New Quote'), array('action' => 'add')); ?></li>
-			<li><?php echo $this->Html->link(__('List Requests'), array('controller' => 'requests', 'action' => 'index')); ?> </li>
-			<li><?php echo $this->Html->link(__('New Request'), array('controller' => 'requests', 'action' => 'add')); ?> </li>
-			<li><?php echo $this->Html->link(__('List Suppliers'), array('controller' => 'suppliers', 'action' => 'index')); ?> </li>
-			<li><?php echo $this->Html->link(__('New Supplier'), array('controller' => 'suppliers', 'action' => 'add')); ?> </li>
-			<li><?php echo $this->Html->link(__('List Users'), array('controller' => 'users', 'action' => 'index')); ?> </li>
-			<li><?php echo $this->Html->link(__('New User'), array('controller' => 'users', 'action' => 'add')); ?> </li>
-			<li><?php echo $this->Html->link(__('List Results'), array('controller' => 'results', 'action' => 'index')); ?> </li>
-			<li><?php echo $this->Html->link(__('New Result'), array('controller' => 'results', 'action' => 'add')); ?> </li>
-			<li><?php echo $this->Html->link(__('List Products'), array('controller' => 'products', 'action' => 'index')); ?> </li>
-			<li><?php echo $this->Html->link(__('New Product'), array('controller' => 'products', 'action' => 'add')); ?> </li>
-			<li><?php echo $this->Html->link(__('List Orders'), array('controller' => 'orders', 'action' => 'index')); ?> </li>
-			<li><?php echo $this->Html->link(__('New Order'), array('controller' => 'orders', 'action' => 'add')); ?> </li>
 		</ul>
+	</div>
+<div class="filters">
+	<span>Ordenar por:</span> <ul class="pagination pagination-inverse">
+		<li><?php echo $this->Paginator->sort('category_id'); ?></li>
+	</ul>
 </div>
 	<?php foreach ($quotes as $quote): ?>
 	<div class="row striped">
@@ -47,17 +40,15 @@
 			</div>
 	</div>
 <?php endforeach; ?>
-	<p>
-	<?php
+<p>
+	<?php 
 	echo $this->Paginator->counter(array(
-	'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}')
-	));
-	?>	</p>
-	<div class="paging">
+	'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}'))); ?>
+</p>
+<ul class="pagination pagination-center">
 	<?php
-		echo $this->Paginator->prev('< ' . __('previous'), array(), null, array('class' => 'prev disabled'));
-		echo $this->Paginator->numbers(array('separator' => ''));
-		echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));
-	?>
-	</div>
+	echo $this->Paginator->prev('' . __('< '), array(), null, array('class' => 'previous'));
+	echo $this->Paginator->numbers(array('separator' => ' '));
+	echo $this->Paginator->next(__('') . ' >', array(), null, array('class' => 'next disabled')); ?>
+</ul>
 </div>

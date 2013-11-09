@@ -476,7 +476,7 @@ class PaginatorHelper extends AppHelper {
 		$check = 'has' . $which;
 		$_defaults = array(
 			'url' => array(), 'step' => 1, 'escape' => true, 'model' => null,
-			'tag' => 'span', 'class' => strtolower($which), 'disabledTag' => null
+			'tag' => 'li', 'class' => strtolower($which), 'disabledTag' => null
 		);
 		$options = array_merge($_defaults, (array)$options);
 		$paging = $this->params($options['model']);
@@ -709,7 +709,7 @@ class PaginatorHelper extends AppHelper {
 		}
 
 		$defaults = array(
-			'tag' => 'span', 'before' => null, 'after' => null, 'model' => $this->defaultModel(), 'class' => null,
+			'tag' => 'li', 'before' => null, 'after' => null, 'model' => $this->defaultModel(), 'class' => null,
 			'modulus' => '8', 'separator' => ' | ', 'first' => null, 'last' => null, 'ellipsis' => '...',
 			'currentClass' => 'current', 'currentTag' => null
 		);
@@ -846,7 +846,7 @@ class PaginatorHelper extends AppHelper {
 	public function first($first = '<< first', $options = array()) {
 		$options = array_merge(
 			array(
-				'tag' => 'span',
+				'tag' => 'li',
 				'after' => null,
 				'model' => $this->defaultModel(),
 				'separator' => ' | ',
@@ -911,7 +911,7 @@ class PaginatorHelper extends AppHelper {
 	public function last($last = 'last >>', $options = array()) {
 		$options = array_merge(
 			array(
-				'tag' => 'span',
+				'tag' => 'li',
 				'before' => null,
 				'model' => $this->defaultModel(),
 				'separator' => ' | ',

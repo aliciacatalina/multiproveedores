@@ -48,66 +48,61 @@
 
 <!-- Búsqueda de proveedores mediante búsqueda de producto -->
 
+<ul class="nav nav-tabs" id="search-tabs">
+	<li class="active"><a href="#attributes">Busqueda por Atributos</a></li>
+	<li><a href="#type">Busqueda por Tipo</a></li>
+	<li><a href="#id">Busqueda por Identificador</a></li>
+</ul>
+
+<div class="tab-content">
 <!-- 1: Búsqued por atributo -->
-<fieldset>
-	<legend> Búsqueda Por Atributos </legend>
+	<div class="tab-pane active" id="attributes">
 
-	<label>Categoría:</label>
-		<?php echo $this->Form->select('Categoría', $categories, array('id' => '1-category_id')); ?>
-	<label>Tipo:</label>
-		<?php echo $this->Form->select('Tipo', $types, array('id' => '1-product_type_id', 'onchange' => 'type_changed1()')); ?>
+			<label>Categoría:</label>
+				<?php echo $this->Form->select('Categoría', $categories, array('id' => '1-category_id')); ?>
+			<label>Tipo:</label>
+				<?php echo $this->Form->select('Tipo', $types, array('id' => '1-product_type_id', 'onchange' => 'type_changed1()')); ?>
 
-	<label> <?php echo __('Atributos del producto:') ?> </label>
-	<div id="1-atributos"> </div>
-	<input type="submit" value="Buscar" onClick="search1()"/>
-</fieldset>
+			<label> <?php echo __('Atributos del producto:') ?> </label>
+			<div id="1-atributos"> </div>
+			<input type="submit" value="Buscar" onClick="search1()" class="btn"/>
 
+	</div>
 <!-- 2: Búsqueda por tipo -->
-<fieldset>
-	<legend> Búsqueda Por Tipo </legend>
+	<div class="tab-pane" id="type">
 
-	<label>Categoría:</label>
-		<?php echo $this->Form->select('Categoría', $categories, array('id' => '2-category_id')); ?>
-	<label>Tipo:</label>
-		<?php echo $this->Form->select('Tipo', $types, array('id' => '2-product_type_id', 'onchange' => 'type_changed()')); ?>
-	<input type="submit" value="Buscar" onClick="search2()"/>
-</fieldset>
+			<label>Categoría:</label>
+				<?php echo $this->Form->select('Categoría', $categories, array('id' => '2-category_id')); ?>
+			<label>Tipo:</label>
+				<?php echo $this->Form->select('Tipo', $types, array('id' => '2-product_type_id', 'onchange' => 'type_changed()')); ?>
+			<input type="submit" value="Buscar" onClick="search2()" class="btn"/>
 
-
-<!-- 3: Búsqueda por manufacturer_id -->
-<fieldset>
-	<legend> Búsqueda Por Identificador </legend>
-
-	<label>Categoría:</label>
-		<?php echo $this->Form->select('Categoría', $categories, array('id' => '3-category_id')); ?>
-	<label>Equivalencias:</label>
-		<?php echo $this->Form->checkbox('Equivalencias', array('id' => '3-equivalencies')); ?>
-	<label>Identificador:</label>
-		<?php echo $this->Form->select('Tipo', $types, array('id' => '3-manufacturer_id')) ?>
-	<input type="submit" value="Buscar" onClick="search3()"/>
-</fieldset>
+	</div>
 
 
+	<!-- 3: Búsqueda por manufacturer_id -->
+	<div class="tab-pane" id="id">
 
+			<label>Categoría:</label>
+				<?php echo $this->Form->select('Categoría', $categories, array('id' => '3-category_id')); ?>
+			<label>Equivalencias:</label>
+				<?php echo $this->Form->checkbox('Equivalencias', array('id' => '3-equivalencies')); ?>
+			<label>Identificador:</label>
+				<?php echo $this->Form->select('Tipo', $types, array('id' => '3-manufacturer_id')) ?>
+			<input type="submit" value="Buscar" onClick="search3()" class="btn"/>
 
-<div class="actions dropdown">
-	<a class="dropdown-toggle" data-toggle="dropdown" href="#"> <?php echo __('Actions'); ?><b class="caret bottom-up"></b></a>
-		<ul class="dropdown-menu bottom-up pull-right">
-			<li><?php echo $this->Html->link(__('Edit Request'), array('action' => 'edit', $request['Request']['id'])); ?> </li>
-			<li><?php echo $this->Form->postLink(__('Delete Request'), array('action' => 'delete', $request['Request']['id']), null, __('Are you sure you want to delete # %s?', $request['Request']['id'])); ?> </li>
-			<li><?php echo $this->Html->link(__('List Requests'), array('action' => 'index')); ?> </li>
-			<li><?php echo $this->Html->link(__('New Request'), array('action' => 'add')); ?> </li>
-			<li><?php echo $this->Html->link(__('List Categories'), array('controller' => 'categories', 'action' => 'index')); ?> </li>
-			<li><?php echo $this->Html->link(__('New Category'), array('controller' => 'categories', 'action' => 'add')); ?> </li>
-			<li><?php echo $this->Html->link(__('List Contents'), array('controller' => 'contents', 'action' => 'index')); ?> </li>
-			<li><?php echo $this->Html->link(__('New Content'), array('controller' => 'contents', 'action' => 'add')); ?> </li>
-			<li><?php echo $this->Html->link(__('List Users'), array('controller' => 'users', 'action' => 'index')); ?> </li>
-			<li><?php echo $this->Html->link(__('New User'), array('controller' => 'users', 'action' => 'add')); ?> </li>
-			<li><?php echo $this->Html->link(__('List Quotes'), array('controller' => 'quotes', 'action' => 'index')); ?> </li>
-			<li><?php echo $this->Html->link(__('New Quote'), array('controller' => 'quotes', 'action' => 'add')); ?> </li>
-		</ul>
+	</div>
+	<script>
+		$('#search-tabs a').click(function (e) {
+		  e.preventDefault();
+		  $(this).tab('show');
+		})
+	</script>
 </div>
-<div class="related">
+
+
+
+<!-- <div class="related">
 	<h3><?php echo __('Related Quotes'); ?></h3>
 	<?php if (!empty($request['Quote'])): ?>
 	<table>
@@ -150,4 +145,4 @@
 			<li><?php echo $this->Html->link(__('New Quote'), array('controller' => 'quotes', 'action' => 'add')); ?> </li>
 		</ul>
 	</div>
-</div>
+</div> -->

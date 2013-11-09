@@ -2,6 +2,7 @@
 App::uses('AppController', 'Controller');
 App::uses('CakeEmail', 'Network/Email');
 App::uses( 'EmailConfig', 'Model');
+App::uses( 'Order', 'Model');
 /**
  * Quotes Controller
  *
@@ -28,88 +29,6 @@ class QuotesController extends AppController {
 	}
 
 /**
- * view method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
-	public function view($id = null) {
-		if (!$this->Quote->exists($id)) {
-			throw new NotFoundException(__('Invalid quote'));
-		}
-		$options = array('conditions' => array('Quote.' . $this->Quote->primaryKey => $id));
-		$this->set('quote', $this->Quote->find('first', $options));
-	}
-
-/**
- * add method
- *
- * @return void
- */
-	public function add() {
-		if ($this->request->is('post')) {
-			$this->Quote->create();
-			if ($this->Quote->save($this->request->data)) {
-				$this->Session->setFlash(__('The quote has been saved.'));
-				//Enviar correo al proveedor				
-				$correoUsuario = $this->Quote->User->find('first', array('conditions' => array('User.id' => $this->request->data["Quote"]["user_id"])));				
-				$correoProveedor = $this->Quote->Supplier->find('first', array('conditions' => array('Supplier.id' => $this->request->data["Quote"]["supplier_id"])));				
-				
-				//Cargar configuracion de correo
-				$emailConfig = new EmailConfig();
-
-				$Email = new CakeEmail();				
-				$Email->config($emailConfig->cargarConfiguracion());
-				$Email->from($correoUsuario["User"]["email"])
-				    ->to($correoProveedor["Supplier"]["contact_email"])
-				    ->subject('Prueba de correo')
-				    ->send('Hola! Este es un correo de pruebas.');
-				    
-				return $this->redirect(array('action' => 'index'));				
-			} else {
-				$this->Session->setFlash(__('The quote could not be saved. Please, try again.'));
-			}
-		}
-		$requests = $this->Quote->Request->find('list');
-		$suppliers = $this->Quote->Supplier->find('list');
-		$users = $this->Quote->User->find('list');
-		$results = $this->Quote->Result->find('list');
-		$products = $this->Quote->Product->find('list');
-		$this->set(compact('requests', 'suppliers', 'users', 'results', 'products'));
-	}
-
-/**
- * edit method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
-	public function edit($id = null) {
-		if (!$this->Quote->exists($id)) {
-			throw new NotFoundException(__('Invalid quote'));
-		}
-		if ($this->request->is(array('post', 'put'))) {
-			if ($this->Quote->save($this->request->data)) {
-				$this->Session->setFlash(__('The quote has been saved.'));
-				return $this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The quote could not be saved. Please, try again.'));
-			}
-		} else {
-			$options = array('conditions' => array('Quote.' . $this->Quote->primaryKey => $id));
-			$this->request->data = $this->Quote->find('first', $options);
-		}
-		$requests = $this->Quote->Request->find('list');
-		$suppliers = $this->Quote->Supplier->find('list');
-		$users = $this->Quote->User->find('list');
-		$results = $this->Quote->Result->find('list');
-		$products = $this->Quote->Product->find('list');
-		$this->set(compact('requests', 'suppliers', 'users', 'results', 'products'));
-	}
-
-/**
  * delete method
  *
  * @throws NotFoundException
@@ -128,4 +47,41 @@ class QuotesController extends AppController {
 			$this->Session->setFlash(__('The quote could not be deleted. Please, try again.'));
 		}
 		return $this->redirect(array('action' => 'index'));
-	}}
+	}
+
+
+	/**
+ * procesar method
+ *
+ * @return void
+ */
+	public function procesar($id, $quantity) {
+		$this->Quote->id = $id;		
+		if (!$this->Quote->exists()) {
+			throw new NotFoundException(__('Invalid request'));
+		}
+		if ($this->Quote->saveField('deleted', '1')) {
+
+			//Crear una orden nueva
+			$this->Order = new Order();
+			$this->Order->user_id = $this->Quote->user_id;
+			$this->Order->quote_id = $this->Quote->id;
+			$this->Order->state_id = 1;
+			$this->Order->quantity = $quantity;
+			
+			print_r((array) $this->Order);
+			$this->Session->setFlash(__('The quote has been processed.'));
+		} else {
+			$this->Session->setFlash(__('The quote could not be processed. Please, try again.'));
+		}
+		/*
+		$this->Order->create();
+		if ($this->Order->save($this->request->data)) {
+			$this->Session->setFlash(__('The order has been saved.'));
+			return $this->redirect(array('action' => 'index'));
+		} else {
+			$this->Session->setFlash(__('The order could not be saved. Please, try again.'));
+		}
+	*/			
+	}
+}
