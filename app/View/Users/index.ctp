@@ -1,33 +1,21 @@
-<h1>Blog usuarios</h1>
-<p><?php echo $this->Html->link("Add User", array('action' => 'add')); ?></p>
-<table>
-    <tr>
-        <th>Idusuario</th>
-        <th>Nombre</th>
-        <th>Nombre de usuario</th>
-        <th>Password</th>
-        <th>Correo</th>
-        <th>Fecha de creaci&oacute;n</th>
-        <th colspan=2>Actions</th>      
-    </tr>
+<h1>Usuarios</h1>
+<p><?php echo $this->Html->link("Add User", array('action' => 'add')); ?><a><i class="icon-user"></i></a></p>
 
 <!-- Here's where we loop through our $usuarios array, printing out usuario info -->
 
 <?php foreach ($users as $user): ?>
-    <tr>
-        <td><?php echo $user['User']['id']; ?></td>
-        <td><?php echo $this->Html->link($user['User']['name'], array('action' => 'view', $user['User']['id'])); ?></td>
-        <td><?php echo $user['User']['username']; ?></td>
-        <td><?php echo $user['User']['password']; ?></td>
-        <td><?php echo $user['User']['email']; ?></td>
-        <td><?php echo $user['User']['created']; ?></td>
-        <td>
+    <div class="row striped">
+        <h4>Id: <?php echo $user['User']['id']; ?></h4>
+        <h4>Nombre: <?php echo $this->Html->link($user['User']['name'], array('action' => 'view', $user['User']['id'])); ?></h4>
+        <h4>Username:<?php echo $user['User']['username']; ?></h4>
+        <h4>Password: <?php echo $user['User']['password']; ?></h4>
+        <h4>Email:<?php echo $user['User']['email']; ?></h4>
+        <h4>Creado: <?php echo $user['User']['created']; ?></h4>
+        <p>
             <?php echo $this->Html->link('Edit', array('action' => 'edit', $user['User']['id'])); ?>
-        </td>
-        <td>
+        </p>
+        <p>
             <?php echo $this->Html->link('Delete', array('action' => 'delete', $user['User']['id'])); ?>
-        </td>        
-    </tr>
+        </p>        
+    </div>
 <?php endforeach; ?>
-
-</table>
