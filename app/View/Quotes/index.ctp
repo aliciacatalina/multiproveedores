@@ -36,7 +36,7 @@
 			<div class="inner-actions">
 				<?php echo $this->Html->link(__('View'), array('action' => 'view', $quote['Quote']['id']), array('class'=>'btn btn-info')); ?>
 				<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $quote['Quote']['id']), array('class'=>'btn btn-info')); ?>
-				<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $quote['Quote']['id']), array('class'=>'btn btn-info'), null, __('Are you sure you want to delete # %s?', $quote['Quote']['id'])); ?>
+				<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $quote['Quote']['id']), array('class'=>'btn btn-danger'), null, __('Are you sure you want to delete # %s?', $quote['Quote']['id'])); ?>
 			</div>
 	</div>
 <?php endforeach; ?>
