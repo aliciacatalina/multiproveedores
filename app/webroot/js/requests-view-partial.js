@@ -5,6 +5,28 @@ function type_changed1()
         fp_type_changed('1-atributos', '1-', '1-product_type_id');
 }
 
+function display_results(params) {
+    for(index in params)
+    {
+        result = params[index];
+        var result_att = document.createElement("p");
+        jQuery.each(result.attributes[index], function(i, val) {
+         result_att.innerHTML = result_att.innerHTML + ' ' +val; 
+         });
+         var result_div =  document.createElement("div");
+         result_div.id="result" + index;
+         result_div.className = "row striped";
+         document.body.appendChild(result_div);
+         var result_id = document.createElement("h4");
+         result_id.innerHTML = result.id;
+         document.getElementById("result" + index).appendChild(result_id);
+         var result_manufacturer = document.createElement("h4");
+         result_manufacturer.innerHTML = result.manufacturer_id;
+         document.getElementById("result"+index).appendChild(result_manufacturer);
+         document.getElementById("result"+index).appendChild(result_att);
+    }
+}
+
 function search1()
 {
         var search = new Array();
@@ -23,10 +45,9 @@ function search1()
                 contentType: 'application/json',
                 async: false,
                 data: JSON.stringify(search),
-                success : function(data)
-                {        
-                        alert(data);
-                        //fp_change_attributes_form('1-atributos', '1-', JSON.parse(data));
+                success : function(data) {
+                    alert(data);
+                    display_results(JSON.parse(data));
                 },
                 
                 error : function(a,b,data)
