@@ -4,25 +4,27 @@ function fp_inputFor(prefix, attribute)
 {
 	data_type_id 	= attribute.Attributes.data_type_id;
 	name			= attribute.Attributes.name;
+	attribute_id 	= attribute.Attributes.id;
+
+	input = $('<input>').attr({
+				id: prefix + attribute_id, 
+				name: name,
+				attribute_id: attribute_id,
+				class: 'input'
+			});
 
 	if(	data_type_id == 1 || 	//Entero
 		data_type_id == 2 || 	//Decimal
 		data_type_id == 3)		//Texto
 	{
-		return $('<input>').attr({
-				id: prefix + name, 
-				name: name,
-				class: 'input'
-			});
+		//nada por ahora
 	}
 	if(	data_type_id == 4)	//Fecha
 	{
-		return $('<input>').attr({
-				id: prefix + name,
-				name: name,
-				class: 'input'
-			}).datepicker();
+		input.datepicker();
 	}
+
+	return input;
 }
 
 //returns an array describing the inputs' values
@@ -34,7 +36,7 @@ function fp_construct_array_for_attribute_values(form_id)
 	for(i = 0; i < attributes.length; i++)
 	{
 		attribute = new Object();
-		attribute.name = attributes[i].name;
+		attribute.attribute_id = attributes[i].id.split("-")[1];
 		attribute.value = attributes[i].value;
 		attributes_array.push(attribute);
 	}

@@ -275,4 +275,18 @@ class Supplier extends AppModel {
 		)
 	);
 
+	public function search_by_products($equivalencies, $products)
+	{
+		{
+			$preparation = $this->search_by_attributes_preparation($equivalencies, $products);
+			$db = $this->getDataSource();
+			// return $preparation['query'];
+			return $db->fetchAll($preparation['query'], $preparation['values']);
+		}
+	}
+
+	public function search_by_products_preparation($equivalencies, $products)
+	{
+
+	}
 }

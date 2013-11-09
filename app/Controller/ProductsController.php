@@ -1,5 +1,7 @@
 <?php
 App::uses('AppController', 'Controller');
+App::uses('ProductSearch', 'Lib');
+App::uses('ProductSearchQueries', 'Lib');
 /**
  * Products Controller
  *
@@ -12,7 +14,7 @@ class ProductsController extends AppController {
  *
  * @var array
  */
-public $components = array('Paginator');
+public $components = array('Paginator', 'RequestHandler');
 
 /**
  * index method
@@ -120,22 +122,19 @@ public $components = array('Paginator');
  * @return void
  */
 	public function products_search_by_attributes()
-	{
-		$this->response->header('Access-Control-Allow-Origin', 'http://origen.herokuapp.com');
-		$this->response->header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
-		$this->response->header('Access-Control-Allow-Headers ', 'Content-Type' );
-		$this->response->header('Content-Type ', 'multipart/form-data');
-
+	{	
 		$this->autoRender = false;
 
-		$product_description = json_decode($this->request->data);
+		$product_description = $this->request->data;
+
 		$productSearch = new ProductSearch(
-			$product_description['category'],
-			$product_description['attributes']
+				$product_description[0],
+				$product_description[1],
+				$product_description[2]
 			);
 
-		$productSearchQueries = new $ProductSearchQueries();
-		echo $productSearchQueries->attributes_search($productSearch);
+		$result = $this->Product->search_by_attributes($productSearch);
+		echo json_encode($result);
 	}
 
 }
