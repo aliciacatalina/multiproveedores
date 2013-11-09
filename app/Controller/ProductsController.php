@@ -129,8 +129,8 @@ public $components = array('Paginator', 'RequestHandler');
 
 		$productSearch = new ProductSearch(
 				$product_description[0],
-				'0',
-				$product_description[1]
+				$product_description[1],
+				$product_description[2]
 			);
 
 		$result = $this->Product->search_by_attributes($productSearch);
