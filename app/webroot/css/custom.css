@@ -71,7 +71,9 @@ h4 {
 	display: inline;
 }
 /** Bootstrap styles for nav tabs **/
-
+#search-tabs .tab-content .btn, #search-tabs .tab-content select {
+	display: block !important; 
+}
 #search-tabs#search-tabs.nav-tabs,
 #search-tabs.nav-pills {
   *zoom: 1;
