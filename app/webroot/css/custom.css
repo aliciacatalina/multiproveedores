@@ -1,6 +1,14 @@
 /**
 ** Custom Styles
 **/
+.grey-container{
+	width:700px;
+  border:1px solid #e1e1e8;
+  padding:30px;
+  -moz-border-radius:4px;
+  -webkit-border-radius:4px;
+  border-radius:4px;
+}
 
 .inner-960 {
 	width: 960px;
