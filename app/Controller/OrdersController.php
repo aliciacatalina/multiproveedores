@@ -38,7 +38,14 @@ class OrdersController extends AppController {
 			throw new NotFoundException(__('Invalid order'));
 		}
 		$options = array('conditions' => array('Order.' . $this->Order->primaryKey => $id));
-		$this->set('order', $this->Order->find('first', $options));
+
+		$order = $this->Order->find('first', $options);
+		$this->set('order', $order );
+
+		$quote = $this->Order->Quote->findById($order['Order']['quote_id']);
+		$this->set('quote', $quote);
+
+		// $this->set('product', $this->Order->Quote->Product->findById($quote['Quote']['product_id']));
 	}
 
 /**

@@ -5,7 +5,7 @@
   
   <!-- Categoria -->
   <div class="row">
-    <div class="col-3 text-right">
+    <div class="col-3 text-right light">
       Categoría
     </div>
     <div class="col-9">
@@ -15,7 +15,7 @@
 
   <!-- Comentario -->
   <div class="row">
-    <div class="col-3 text-right">
+    <div class="col-3 text-right light">
       Comentario
     </div>
     <div class="col-9">
@@ -25,7 +25,7 @@
 
   <!-- Fecha -->
   <div class="row">
-    <div class="col-3 text-right">
+    <div class="col-3 text-right light">
       Fecha de creación
     </div>
     <div class="col-9">
@@ -34,7 +34,7 @@
   </div>
 
   <div class="row">
-    <div class="col-3 text-right">
+    <div class="col-3 text-right light">
       Fecha de modificación
     </div>
     <div class="col-9">
@@ -42,9 +42,9 @@
     </div>
   </div>
 
-  <!-- Fecha -->
+  <!-- Notas -->
   <div class="row">
-    <div class="col-3 text-right">
+    <div class="col-3 text-right light">
       Notas
     </div>
     <div class="col-9">
@@ -52,7 +52,7 @@
     </div>
   </div>
 
-  <div class="text-right">
+  <div class="text-right light">
     <?php echo $this->Html->link(__('Edit'), array('controller' => 'requests', 'action' => 'edit', $request['Request']['id']), array('class' => "btn btn-info btn-highlight")); ?>
     <?php echo $this->Html->link(__('Delete'), array('controller' => 'requests', 'action' => 'delete', $request['Request']['id']), array('class' => "btn btn-danger btn-highlight"), __('Are you sure you want to delete # %s?', $request['Request']['id'])); ?>
   </div>
